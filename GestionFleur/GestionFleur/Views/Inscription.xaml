@@ -5,8 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
         mc:Ignorable="d"
-        Title="Inscription" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Inscription" Height="700" Width="1000"
+        WindowStartupLocation = "CenterScreen">
+    <Grid Background="MintCream">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+
+        </Grid.RowDefinitions>
+        <Label Content="Inscription" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="30" FontFamily="Carlito" 
+               Grid.Column="0" Grid.ColumnSpan="4"/>
+        <Label Content="Nom Utilisateur: "
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"
+               Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="InscriptionUserID"
+               Grid.Column="2" Grid.Row="1" Height="50" Width="240"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"/>
+        <Label Content="Mot de Passe: " 
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"
+               Grid.Column="1"  Grid.Row="2" />
+        <TextBox x:Name="InscriptionMDP"
+               Grid.Column="2" Grid.Row="2" Height="50" Width="240"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"/>
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="4" 
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Type de Compte :" FontSize="22" FontFamily="Carlito" Margin="0,0,10,0"/>
+            <RadioButton x:Name="InscriptionClient" GroupName="TypeCompte" Content="Client" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
+            <RadioButton x:Name="InscriptionVendeur" GroupName="TypeCompte" Content="Vendeur" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
+            <RadioButton x:Name="InscriptionAdministrateur" GroupName="TypeCompte" Content="Fournisseur" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
+            <RadioButton x:Name="InscriptionProprietaire" GroupName="TypeCompte" Content="Propriétaire" FontSize="22" FontFamily="Carlito" Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <Button x:Name="BoutonInscription"
+                    Content="Inscription"
+                    Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"
+                    Height="60" Width="130"
+                    FontSize="22" FontFamily="Carlito"
+                    Background="LightGreen"
+            />
+        </Grid>
 </Window>
