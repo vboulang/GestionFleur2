@@ -61,5 +61,12 @@
                     FontSize="22" FontFamily="Carlito"
                     Background="LightGreen"
             />
-        </Grid>
+        <Button x:Name="RetourInscription"
+                    Content="Retour"
+                    Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2"
+                    Height="50" Width="110"
+                    FontSize="18" FontFamily="Carlito"
+                    Background="SeaGreen"
+            />
+    </Grid>
 </Window>
