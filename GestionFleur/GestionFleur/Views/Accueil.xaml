@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
         mc:Ignorable="d"
-        Title="Accueil" Height="450" Width="800">
-    <Grid>
-        
+        Title="Accueil" Height="700" Width="1000"
+        WindowStartupLocation = "CenterScreen">
+
+    <Grid Background="MintCream">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label Content="Bienvenue dans l'application de GestionFleurs" 
+               HorizontalAlignment="Center" Height="50" VerticalAlignment="Center"
+               FontSize="30" FontFamily="Carlito" 
+               Grid.Column="0" Grid.ColumnSpan="4"/>
+        <Label Content="Nom Utilisateur: "
+               HorizontalAlignment="Center" Height="50" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"
+               Grid.Column="1" Grid.Row="1"/>
+        <TextBox Grid.Column="2" Grid.Row="1" Height="50" Width="240"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"/>
+        <Label Content="Mot de Passe: " 
+               HorizontalAlignment="Center" Height="50" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"
+               Grid.Column="1"  Grid.Row="2" />
+        <TextBox Grid.Column="2" Grid.Row="2" Height="50" Width="240"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="22" FontFamily="Carlito"/>
+
+
+        <Grid Grid.Column="1" Grid.Row ="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Déja Inscrit?"
+                   HorizontalAlignment="Right" Height="50" VerticalAlignment="Center"
+                   FontSize="18" FontFamily="Carlito"/>
+            <Button Content="Se Connecter" 
+                    Grid.Column="1" Grid.Row="0"
+                    HorizontalAlignment="Left"
+                    Height="50" Width="120"
+                    FontSize="18" FontFamily="Carlito"
+                    Background="SeaGreen"/>
+            <Label Content="Nouvel Utilisateur?" 
+                   Grid.Column="0" Grid.Row="1"
+                   HorizontalAlignment="Right" Height="50" VerticalAlignment="Center"
+                   FontSize="18" FontFamily="Carlito"/>
+            <Button Content="Inscription"
+                    Grid.Column="1" Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Height="50" Width="120"
+                    FontSize="18" FontFamily="Carlito"
+                    Background="LightGreen"
+            />
+        </Grid>
     </Grid>
 </Window>
