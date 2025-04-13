@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
         mc:Ignorable="d"
-        Title="InterfaceFournisseur" Height="450" Width="800">
+        Title="InterfaceFournisseur" Height="700" Width="1000">
     <Grid>
-        
+        <DataGrid x:Name="FournisseurAjoutFleur">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Fleur" Width="110"/>
+                <DataGridTextColumn Header="Prix Unitaire" Width="110"/>
+                <DataGridTextColumn Header="Stock" Width="110"/>
+                <DataGridTextColumn Header="CommandeClient" Width="110"/>
+                <DataGridTextColumn Header="Ajout" Width="110"/>
+                <DataGridTemplateColumn Header="Réapprovisionnement" Width="110">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="-" Width="25" />
+                                <Label Content="" Width="50" HorizontalContentAlignment="Center"/>
+                                <Button Content="+" Width="25"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Total" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
