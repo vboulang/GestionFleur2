@@ -23,5 +23,5 @@ namespace GestionFleur.Views
 		{
 			InitializeComponent();
 		}
-	}
+    }
 }
