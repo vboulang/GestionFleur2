@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace GestionFleur.Views
 {
 	/// <summary>
-	/// Logique d'interaction pour Vendeur.xaml
+	/// Logique d'interaction pour InterfaceVendeur.xaml
 	/// </summary>
 	public partial class InterfaceVendeur : Window
 	{

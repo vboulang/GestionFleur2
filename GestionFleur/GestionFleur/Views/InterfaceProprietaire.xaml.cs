@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace GestionFleur.Views
 {
 	/// <summary>
-	/// Logique d'interaction pour Proprietaire.xaml
+	/// Logique d'interaction pour InterfaceProprietaire.xaml
 	/// </summary>
 	public partial class InterfaceProprietaire : Window
 	{
