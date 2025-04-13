@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Fournisseur
+	internal class Fournisseur:Utilisateur
 	{
+		public int IdFournisseur { get; set; }
+
 	}
 }

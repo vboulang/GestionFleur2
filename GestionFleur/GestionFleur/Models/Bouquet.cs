@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Bouquet
+	internal class Bouquet : Article
 	{
+		public string BouquetId {  get; set; }
+		public string MessageCarte {  get; set; }
+		//table lie pour les fleurs
 	}
 }

@@ -8,5 +8,6 @@ namespace GestionFleur.Models
 {
 	internal class Article
 	{
+		public double PrixUnitaire { get; set; }
 	}
 }

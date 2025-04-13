@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Proprietaire
+	internal class Proprietaire:Utilisateur
 	{
+		public int IdProprietaire { get; set; }
+
 	}
 }

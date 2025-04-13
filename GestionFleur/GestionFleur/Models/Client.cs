@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Client
+	internal class Client : Utilisateur
 	{
+		public int IdClient { get; set; }
 	}
 }
