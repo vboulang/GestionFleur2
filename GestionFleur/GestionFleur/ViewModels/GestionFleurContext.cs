@@ -9,19 +9,17 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using System.Windows.Media;
 
+
+
 namespace GestionFleur.ViewModels
 {
 	internal class GestionFleurContext : DbContext
 	{
 		//Les tables de base//
 		public DbSet<Bouquet> Bouquets { get; set; }
-		public DbSet<Client> Clients { get; set; }
+		public DbSet<Utilisateur> Utilisateurs { get; set; }
 		public DbSet<Commande> Commandes { get; set; }
-		public DbSet<Facture> Factures { get; set; }
 		public DbSet<Fleur> Fleurs { get; set; }
-		public DbSet<Fournisseur> Fournisseurs { get; set; }
-		public DbSet<Proprietaire> Proprietaires { get; set; }
-		public DbSet<Vendeur> Vendeurs { get; set; }
 
 		//Les tables de jointure//
 
@@ -34,22 +32,16 @@ namespace GestionFleur.ViewModels
 		}
 
 		//DataSeed//
-		//Exemple//
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
-		//{
-		//	modelBuilder.Entity<Produit>().HasData(
-		//		new Produit() { ProduitId = 1, nom = "Produit1", prix = 10.0 },
-		//		new Produit() { ProduitId = 2, nom = "Produit2", prix = 20.0 },
-		//		new Produit() { ProduitId = 3, nom = "Produit3", prix = 30.0 }
-		//	);
-		//	modelBuilder.Entity<Utilisateur>().HasData(
-		//	new Utilisateur() { UtilisateurId = 1, nom = "Roger", email = "23@gmail.com" }
-		//	);
-		//	modelBuilder.Entity<Utilisateur>()
-		//	.HasMany(u => u.Commandes)
-		//	.WithOne(c => c.Utilisateur)
-		//	.HasForeignKey(c => c.UtilisateurId);
-
-		//}
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Commande>()
+				.HasOne(c => c.Client)
+				.WithMany(u => u.CommandesClient)
+				.HasForeignKey(c => c.ClientId);
+			modelBuilder.Entity<Commande>()
+				.HasOne(c => c.Vendeur)
+				.WithMany(u => u.CommandesASuperviser)
+				.HasForeignKey(c => c.VendeurId);
+		}
 	}
 }
