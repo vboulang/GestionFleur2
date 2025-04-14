@@ -8,5 +8,10 @@ namespace GestionFleur.Models
 {
 	internal class Commande
 	{
+		public int CommandeId { get; set; }
+		//lien article
+		//lien vendeur
+		//lien facture
+		//lien client
 	}
 }

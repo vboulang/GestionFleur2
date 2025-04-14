@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class TypeDePaiement
+	public enum TypeDePaiement
 	{
+		Credit,
+		Debit,
+		Comptant
 	}
 }

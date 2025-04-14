@@ -8,5 +8,7 @@ namespace GestionFleur.Models
 {
 	internal class Utilisateur
 	{
+		public string Nom { get; set; }
+		public string Prenom { get; set; }
 	}
 }
