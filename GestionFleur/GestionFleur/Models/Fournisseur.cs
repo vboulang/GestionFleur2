@@ -8,7 +8,7 @@ namespace GestionFleur.Models
 {
 	internal class Fournisseur:Utilisateur
 	{
-		public int IdFournisseur { get; set; }
+		public int FournisseurId { get; set; }
 
 	}
 }

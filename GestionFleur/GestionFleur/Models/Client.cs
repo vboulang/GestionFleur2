@@ -8,6 +8,7 @@ namespace GestionFleur.Models
 {
 	internal class Client : Utilisateur
 	{
-		public int IdClient { get; set; }
+		public int ClientId { get; set; }
+		public ICollection<Commande> Commandes { get; set; }
 	}
 }

@@ -10,6 +10,9 @@ namespace GestionFleur.Models
 	{
 		public string BouquetId {  get; set; }
 		public string MessageCarte {  get; set; }
-		//table lie pour les fleurs
+		
+		//Liaison avec la table Bouquet
+		public ICollection<Fleur> Fleurs { get; set; }
+		public ICollection<Commande> Commandes { get; set; }
 	}
 }

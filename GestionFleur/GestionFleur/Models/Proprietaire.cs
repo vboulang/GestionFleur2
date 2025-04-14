@@ -8,7 +8,7 @@ namespace GestionFleur.Models
 {
 	internal class Proprietaire:Utilisateur
 	{
-		public int IdProprietaire { get; set; }
+		public int ProprietaireId { get; set; }
 
 	}
 }
