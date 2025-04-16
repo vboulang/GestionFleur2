@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Globalization;
+using System.IO;
 
 namespace GestionFleur.ViewModels
 {
@@ -43,8 +47,12 @@ namespace GestionFleur.ViewModels
 			UtilisateurEnConnexion = new Models.Utilisateur();
 			GestionFleurContext GFContext = new GestionFleurContext();
 			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
-			if(utilisateurs.Count == 0)
+			List<Fleur> fleurs = GFContext.Fleurs.ToList();
+
+			if (utilisateurs.Count == 0)
 				AddUserFromApiInDB();
+			if (fleurs.Count == 0)
+				AddFlowerFromCSVInDB("../../../fleurs_db.csv");
 
 			BoutonConnectionCommande = new RelayCommand(
 					o => true,
@@ -57,12 +65,31 @@ namespace GestionFleur.ViewModels
 
 		}
 
+		public void AddFlowerFromCSVInDB(string path)
+		{
+			using (var reader = new StreamReader(path))
+			using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+			{
+				var records = csv.GetRecords<Models.Fleur>();
+				Models.Fleur nouvellefleur = new Models.Fleur();
+				GestionFleurContext GFContext = new GestionFleurContext();
+
+				foreach (var record in records)
+				{
+					nouvellefleur = record;
+					nouvellefleur.quantite = 10;
+					GFContext.Fleurs.Add(nouvellefleur);
+					GFContext.SaveChanges();
+				}
+			}
+		}
+
 		public void AddUserFromApiInDB()
 		{
-			List<Utilisateur> proprietaire = ApiQuery.GetUtilisateurs("users?limit=1&select=firstName,lastName,username,password,id");
-			List<Utilisateur> vendeurs = ApiQuery.GetUtilisateurs("users?limit=5&skip=1&select=firstName,lastName,username,password,id");
-			List<Utilisateur> fournisseurs = ApiQuery.GetUtilisateurs("users?limit=2&skip=6&select=firstName,lastName,username,password,id");
-			List<Utilisateur> clients = ApiQuery.GetUtilisateurs("users?limit=10&skip=8&select=firstName,lastName,username,password,id");
+			List<Utilisateur> proprietaire = ApiQuery.GetUtilisateurs("users?limit=1&select=firstName,lastName,username,password");
+			List<Utilisateur> vendeurs = ApiQuery.GetUtilisateurs("users?limit=5&skip=1&select=firstName,lastName,username,password");
+			List<Utilisateur> fournisseurs = ApiQuery.GetUtilisateurs("users?limit=2&skip=6&select=firstName,lastName,username,password");
+			List<Utilisateur> clients = ApiQuery.GetUtilisateurs("users?limit=10&skip=8&select=firstName,lastName,username,password");
 			foreach (Utilisateur u in proprietaire)
 				AddUtilisateurBD(u, "P");
 			foreach (Utilisateur u in vendeurs)
