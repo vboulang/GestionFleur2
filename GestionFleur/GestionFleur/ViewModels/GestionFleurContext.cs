@@ -26,7 +26,8 @@ namespace GestionFleur.ViewModels
 		//Configuration//
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			string connection_string = "Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt=False;Trust Server Certificate=False;Application Intent = ReadWrite; Multi Subnet Failover=False\r\n\t"; string database_name = "GestionFleurDataBase";
+			string connection_string = "Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt=False;Trust Server Certificate=False;Application Intent = ReadWrite; Multi Subnet Failover=False\r\n\t"; 
+			string database_name = "GestionFleurDataBase";
 			optionsBuilder.UseSqlServer($"{connection_string};Database={database_name};");
 		}
 

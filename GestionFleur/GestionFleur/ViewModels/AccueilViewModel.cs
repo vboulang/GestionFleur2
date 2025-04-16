@@ -34,7 +34,46 @@ namespace GestionFleur.ViewModels
 
 		public void BoutonConnection()
 		{
-			
+			GestionFleurContext GFContext = new GestionFleurContext();
+			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
+			foreach (Utilisateur util in utilisateurs)
+			{
+				if (UtilisateurEnConnexion.Identifiant == util.Identifiant && UtilisateurEnConnexion.MotDePasse == util.MotDePasse)
+				{
+					switch (util.Type)
+					{
+						case "P":
+							{
+								Views.InterfaceProprietaire proprietaire = new Views.InterfaceProprietaire();
+								proprietaire.Show();
+								FermerFenetre();
+								return;
+							}
+						case "V":
+							{
+								Views.InterfaceVendeur vendeur = new Views.InterfaceVendeur();
+								vendeur.Show();
+								FermerFenetre();
+								return;
+							}
+						case "F":
+							{
+								Views.InterfaceFournisseur fournisseur = new Views.InterfaceFournisseur();
+								fournisseur.Show();
+								FermerFenetre();
+								return;
+							}
+						case "C":
+							{
+								Views.InterfaceClient client = new Views.InterfaceClient();
+								client.Show();
+								FermerFenetre();
+								return;
+							}
+					}
+				}
+			}
+			MessageBox.Show("Identifiant ou mot de passe incorrect", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 
@@ -71,8 +110,6 @@ namespace GestionFleur.ViewModels
 				AddUtilisateurBD(u, "F");
 			foreach (Utilisateur u in clients)
 				AddUtilisateurBD(u, "C");
-			
-		UtilisateurEnConnexion.MotDePasse = clients.Count.ToString();
 		}
 
 		public void AddUtilisateurBD(Utilisateur u, string type)
