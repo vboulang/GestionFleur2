@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GestionFleur.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-//Pour aller chercher 30 entree dans l<api users?limit=30&select=id,firstName,lastName,username,password
-//aller chercher les format a entrer selon le type de la demande
-//ajouter la categorie type a chaque entree
 namespace GestionFleur.ViewModels
 {
 	internal class RestApiQuery
@@ -24,16 +17,16 @@ namespace GestionFleur.ViewModels
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public async Task<List<Models.Utilisateur>> GetUtilisateursAsync(string path)
+		public async Task<Models.UserToDeserialize> GetUtilisateursAsync(string path)
 		{
 			HttpResponseMessage response = await _client.GetAsync(path);
 			if(response.IsSuccessStatusCode)
 			{
 				string data = await response.Content.ReadAsStringAsync();
-				List<Models.Utilisateur> utilisateurs = JsonConvert.DeserializeObject<List<Models.Utilisateur>>(data);
+				Models.UserToDeserialize utilisateurs = JsonConvert.DeserializeObject<Models.UserToDeserialize> (data);
 				return utilisateurs;
 			}
-			return new List<Models.Utilisateur>();
+			return new Models.UserToDeserialize();
 		}
 
 		public List<Models.Utilisateur> GetUtilisateurs(string path)
@@ -41,14 +34,15 @@ namespace GestionFleur.ViewModels
 			List<Models.Utilisateur> utilisateurs = new List<Models.Utilisateur>();
 			try
 			{
-				Task<List<Models.Utilisateur>> utilisateur = Task.Run(async () => await GetUtilisateursAsync(path));
+				Task<Models.UserToDeserialize> utilisateur = Task.Run(async () => await GetUtilisateursAsync(path));
 				utilisateur.Wait();
-				utilisateurs = utilisateur.Result;
+				utilisateurs = utilisateur.Result.users;
 			}
-			catch (Exception e) { Console.WriteLine(e); }
+			catch (Exception) { }
 
 			return utilisateurs;
 
+			
 		}
 	}
 }
