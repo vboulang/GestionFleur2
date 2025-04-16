@@ -5,7 +5,7 @@
 namespace GestionFleur.Migrations
 {
     /// <inheritdoc />
-    public partial class enleversousclasseutilisateur : Migration
+    public partial class CreateDb2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,13 @@ namespace GestionFleur.Migrations
                 table: "Commandes",
                 newName: "TypeDePaiement");
 
+            migrationBuilder.AddColumn<double>(
+                name: "prixUnitaire",
+                table: "Fleurs",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0);
+
             migrationBuilder.AddColumn<bool>(
                 name: "PaiementEffectue",
                 table: "Commandes",
@@ -69,26 +76,19 @@ namespace GestionFleur.Migrations
                     table.PrimaryKey("PK_Utilisateurs", x => x.UtilisateurId);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Utilisateurs",
-                columns: new[] { "UtilisateurId", "Identifiant", "MotDePasse", "Nom", "Prenom", "Type" },
-                values: new object[] { 1, "vboulanger", "123", "Boulanger", "Vincent", "C" });
-
             migrationBuilder.AddForeignKey(
                 name: "FK_Commandes_Utilisateurs_ClientId",
                 table: "Commandes",
                 column: "ClientId",
                 principalTable: "Utilisateurs",
-                principalColumn: "UtilisateurId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "UtilisateurId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Commandes_Utilisateurs_VendeurId",
                 table: "Commandes",
                 column: "VendeurId",
                 principalTable: "Utilisateurs",
-                principalColumn: "UtilisateurId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "UtilisateurId");
         }
 
         /// <inheritdoc />
@@ -104,6 +104,10 @@ namespace GestionFleur.Migrations
 
             migrationBuilder.DropTable(
                 name: "Utilisateurs");
+
+            migrationBuilder.DropColumn(
+                name: "prixUnitaire",
+                table: "Fleurs");
 
             migrationBuilder.DropColumn(
                 name: "PaiementEffectue",

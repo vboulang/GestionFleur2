@@ -51,8 +51,7 @@
             <RadioButton x:Name="InscriptionClient" GroupName="TypeCompte" Content="Client" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
             <RadioButton x:Name="InscriptionVendeur" GroupName="TypeCompte" Content="Vendeur" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
             <RadioButton x:Name="InscriptionAdministrateur" GroupName="TypeCompte" Content="Fournisseur" FontSize="22" FontFamily="Carlito" Margin="10,0,10,0"/>
-            <RadioButton x:Name="InscriptionProprietaire" GroupName="TypeCompte" Content="Propriétaire" FontSize="22" FontFamily="Carlito" Margin="10,0,0,0"/>
-        </StackPanel>
+         </StackPanel>
 
         <Button x:Name="BoutonInscription"
                     Content="Inscription"

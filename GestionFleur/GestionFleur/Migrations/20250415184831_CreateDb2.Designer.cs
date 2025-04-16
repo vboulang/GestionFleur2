@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionFleur.Migrations
 {
     [DbContext(typeof(GestionFleurContext))]
-    [Migration("20250414211819_enlever sous classe utilisateur")]
-    partial class enleversousclasseutilisateur
+    [Migration("20250415184831_CreateDb2")]
+    partial class CreateDb2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,9 @@ namespace GestionFleur.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("prixUnitaire")
+                        .HasColumnType("float");
+
                     b.Property<int>("quantite")
                         .HasColumnType("int");
 
@@ -177,17 +180,6 @@ namespace GestionFleur.Migrations
                     b.HasKey("UtilisateurId");
 
                     b.ToTable("Utilisateurs");
-
-                    b.HasData(
-                        new
-                        {
-                            UtilisateurId = 1,
-                            Identifiant = "vboulanger",
-                            MotDePasse = "123",
-                            Nom = "Boulanger",
-                            Prenom = "Vincent",
-                            Type = "C"
-                        });
                 });
 
             modelBuilder.Entity("BouquetCommande", b =>
@@ -240,13 +232,13 @@ namespace GestionFleur.Migrations
                     b.HasOne("GestionFleur.Models.Utilisateur", "Client")
                         .WithMany("CommandesClient")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GestionFleur.Models.Utilisateur", "Vendeur")
                         .WithMany("CommandesASuperviser")
                         .HasForeignKey("VendeurId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");

@@ -45,7 +45,7 @@ namespace GestionFleur.ViewModels
 				utilisateur.Wait();
 				utilisateurs = utilisateur.Result;
 			}
-			catch (Exception) { }
+			catch (Exception e) { Console.WriteLine(e); }
 
 			return utilisateurs;
 

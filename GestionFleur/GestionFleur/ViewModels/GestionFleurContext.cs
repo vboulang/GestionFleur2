@@ -26,8 +26,7 @@ namespace GestionFleur.ViewModels
 		//Configuration//
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			string connection_string = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; Trust Server Certificate = False; Application Intent = ReadWrite; Multi Subnet Failover = False";
-			string database_name = "GestionFleurDataBase";
+			string connection_string = "Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt=False;Trust Server Certificate=False;Application Intent = ReadWrite; Multi Subnet Failover=False\r\n\t"; string database_name = "GestionFleurDataBase";
 			optionsBuilder.UseSqlServer($"{connection_string};Database={database_name};");
 		}
 
@@ -37,11 +36,14 @@ namespace GestionFleur.ViewModels
 			modelBuilder.Entity<Commande>()
 				.HasOne(c => c.Client)
 				.WithMany(u => u.CommandesClient)
-				.HasForeignKey(c => c.ClientId);
+				.HasForeignKey(c => c.ClientId)
+				.OnDelete(DeleteBehavior.NoAction);
 			modelBuilder.Entity<Commande>()
 				.HasOne(c => c.Vendeur)
 				.WithMany(u => u.CommandesASuperviser)
-				.HasForeignKey(c => c.VendeurId);
+				.HasForeignKey(c => c.VendeurId)
+				.OnDelete(DeleteBehavior.NoAction);
+
 		}
 	}
 }
