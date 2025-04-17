@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,10 +10,18 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Bouquet
+	internal class Bouquet : INotifyPropertyChanged
 	{
+		
+		[Ignore]
 		public string BouquetId {  get; set; }
+		public string Nom {  get; set; }
+		[Name("Fleurs")]
+		[NotMapped]
+		public string FleursCSV { get; set; }
+		[Ignore]
 		public string MessageCarte {  get; set; }
+		[Ignore]
 		public double PrixUnitaire { get; set; }
 		public event PropertyChangedEventHandler PropertyChanged;
 

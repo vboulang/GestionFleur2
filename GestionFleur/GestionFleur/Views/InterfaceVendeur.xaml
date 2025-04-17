@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
         mc:Ignorable="d"
-        Title="InterfaceVendeur" Height="450" Width="800">
+        Title="InterfaceVendeur" Height="700" Width="1000"
+        WindowStartupLocation = "CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Consulter">
