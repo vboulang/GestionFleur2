@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Commande
+	internal class Commande : INotifyPropertyChanged
 	{
 		public int CommandeId { get; set; }
 		public double TotalTransaction { get; set; }

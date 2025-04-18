@@ -1,19 +1,9 @@
 ﻿using GestionFleur.Models;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore;
 using System.Windows;
-using CsvHelper.Configuration;
 using CsvHelper;
 using System.Globalization;
 using System.IO;
-using System.ComponentModel;
 
 namespace GestionFleur.ViewModels
 {
@@ -117,7 +107,7 @@ namespace GestionFleur.ViewModels
 				foreach (var record in records)
 				{
 					nouvellefleur = record;
-					nouvellefleur.quantite = 10;
+					nouvellefleur.Quantite = 10;
 					GFContext.Fleurs.Add(nouvellefleur);
 					GFContext.SaveChanges();
 				}

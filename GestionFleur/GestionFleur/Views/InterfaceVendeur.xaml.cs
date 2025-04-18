@@ -22,6 +22,10 @@ namespace GestionFleur.Views
 		public InterfaceVendeur()
 		{
 			InitializeComponent();
+			ViewModels.AccueilViewModel venvm = new ViewModels.AccueilViewModel();
+			DataContext = venvm;
+			if (venvm.FermerFenetre == null)
+				venvm.FermerFenetre = new Action(this.Close);
 		}
 	}
 }

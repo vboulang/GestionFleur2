@@ -29,7 +29,7 @@ namespace GestionFleur.ViewModels
 			GestionFleurContext GFContext = new GestionFleurContext();
 			Utilisateur utilisateurPresent = GFContext.Utilisateurs.FirstOrDefault(u => u.Identifiant == NouvelUtilisateur.Identifiant);
 			if(utilisateurPresent != null )
-				MessageBox.Show("Veuillez remplir tous les champs", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Nom d'utilisateur déjà attribué", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 			else
 			{
 				Utilisateur nouvelUtilisateurdb = new Utilisateur();

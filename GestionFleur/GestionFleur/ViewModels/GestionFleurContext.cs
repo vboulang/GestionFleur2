@@ -34,6 +34,7 @@ namespace GestionFleur.ViewModels
 		//DataSeed//
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+
 			modelBuilder.Entity<Commande>()
 				.HasOne(c => c.Client)
 				.WithMany(u => u.CommandesClient)

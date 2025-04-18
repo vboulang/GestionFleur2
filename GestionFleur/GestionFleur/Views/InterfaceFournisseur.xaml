@@ -5,28 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
         mc:Ignorable="d"
-        Title="InterfaceFournisseur" Height="700" Width="1000">
-    <Grid>
-        <DataGrid x:Name="FournisseurAjoutFleur">
+        Title="InterfaceFournisseur" Height="700" Width="1000"
+        WindowStartupLocation = "CenterScreen">
+    <Grid Background="MintCream">
+        <DataGrid 
+                    ItemsSource="{Binding ToutesLesFleurs}"
+                    AutoGenerateColumns="False" CanUserResizeColumns="False"
+                    SelectedItem="{Binding FleurSelectionnee, Mode=TwoWay}"
+                    Width="555"
+                    HorizontalAlignment="Left"
+                    Background="MintCream">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Fleur" Width="110"/>
-                <DataGridTextColumn Header="Prix Unitaire" Width="110"/>
-                <DataGridTextColumn Header="Stock" Width="110"/>
-                <DataGridTextColumn Header="CommandeClient" Width="110"/>
-                <DataGridTextColumn Header="Ajout" Width="110"/>
-                <DataGridTemplateColumn Header="Réapprovisionnement" Width="110">
+                <DataGridTemplateColumn Header="Nom" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="-" Width="25" />
-                                <Label Content="" Width="50" HorizontalContentAlignment="Center"/>
-                                <Button Content="+" Width="25"/>
+                            <Label Content="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Prix Unitaire (CAD)" Width="110">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Quantité" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Quantite, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Quantité à ajouter" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}"
+                                    FontSize="18" FontFamily="Carlito" Width="100"/>
+                                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.AjouterFleurCommande}" CommandParameter="{Binding}" 
+                                    Content="Ajout"
+                                    Background="LightGreen"
+                                    FontSize="18" FontFamily="Carlito" Width="100"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Total" Width="110"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Command="{Binding BoutonRetourCommande}"
+            Content="Retour"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Margin="170"
+            Height="50" Width="110"
+            FontSize="18" FontFamily="Carlito"
+            Background="SeaGreen"
+    />
     </Grid>
 </Window>

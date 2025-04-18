@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,27 +10,84 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Fleur
+	internal class Fleur : INotifyPropertyChanged
 	{
+		private string _nom;
+		private string _couleur;
+		private string _description;
+		private double _prixUnitaire;
+		private int _quantite;
+		private int _quantiteEnAttente;
 
-		//Nom,Prix Unitaire (CAD),Couleur,Caractéristiques
 		[Ignore]
 		public int FleurId { get; set; }
 
 		[Name("Nom")]
-		public string nom { get; set; }
+		public string Nom
+		{
+			get {  return _nom; }
+			set
+			{
+				_nom = value;
+				OnPropertyChanged();
+			}
+		}
 
 		[Name("Couleur")]
-		public string couleur { get; set; }
+		public string Couleur
+		{
+			get { return _couleur; }
+			set
+			{
+				_couleur = value;
+				OnPropertyChanged();
+			}
+		}
 
 		[Name("Caractéristiques")]
-		public string description{ get; set; }
-		
+		public string Description
+		{
+			get { return _description; }
+			set
+			{
+				_description = value;
+				OnPropertyChanged();
+			}
+		}
+
 		[Ignore]
-		public int quantite { get; set; }
-		
+		[NotMapped]
+		public int QuantiteEnAttente
+		{
+			get { return _quantiteEnAttente; }
+			set
+			{
+				_quantiteEnAttente = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[Ignore]
+		public int Quantite
+		{
+			get { return _quantite; }
+			set
+			{
+				_quantite = value;
+				OnPropertyChanged();
+			}
+		}
+
+
 		[Name("Prix Unitaire (CAD)")]
-		public double prixUnitaire { get; set; }
+		public double PrixUnitaire
+		{
+			get { return _prixUnitaire;}
+			set {
+				_prixUnitaire = value;
+				OnPropertyChanged();
+			}
+		}
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		//Liaison avec la table Bouquet
@@ -38,7 +96,7 @@ namespace GestionFleur.Models
 		public bool IsValid()
 		{
 			return !string.IsNullOrEmpty(nom) && !string.IsNullOrEmpty(couleur) && !string.IsNullOrEmpty(description)
-					&& (prixUnitaire > 0);
+					&&!(prixUnitaire > 0);
 		}
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
