@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,6 +17,7 @@ namespace GestionFleur.Models
 		private string _description;
 		private double _prixUnitaire;
 		private int _quantite;
+		private int _quantiteEnAttente;
 
 		[Ignore]
 		public int FleurId { get; set; }
@@ -54,6 +56,18 @@ namespace GestionFleur.Models
 		}
 
 		[Ignore]
+		[NotMapped]
+		public int QuantiteEnAttente
+		{
+			get { return _quantiteEnAttente; }
+			set
+			{
+				_quantiteEnAttente = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[Ignore]
 		public int Quantite
 		{
 			get { return _quantite; }
@@ -63,6 +77,7 @@ namespace GestionFleur.Models
 				OnPropertyChanged();
 			}
 		}
+
 
 		[Name("Prix Unitaire (CAD)")]
 		public double PrixUnitaire

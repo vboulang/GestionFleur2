@@ -22,7 +22,7 @@ namespace GestionFleur.Views
 		public InterfaceFournisseur()
 		{
 			InitializeComponent();
-			ViewModels.InscriptionViewModel fourvm = new ViewModels.InscriptionViewModel();
+			ViewModels.InterfaceFournisseurViewModel fourvm = new ViewModels.InterfaceFournisseurViewModel();
 			DataContext = fourvm;
 			if (fourvm.FermerFenetre == null)
 				fourvm.FermerFenetre = new Action(this.Close);

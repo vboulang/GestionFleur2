@@ -8,14 +8,59 @@
         Title="InterfaceFournisseur" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
     <Grid>
-        <DataGrid Margin="0,0,0,50"
+        <DataGrid 
                     ItemsSource="{Binding ToutesLesFleurs}"
-                    AutoGenerateColumns="False" CanUserResizeColumns="True">
+                    AutoGenerateColumns="False" CanUserResizeColumns="False"
+                    SelectedItem="{Binding FleurSelectionnee, Mode=TwoWay}"
+                    Width="525"
+                  HorizontalAlignment="Left">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Binding="{Binding ToutesLesFleurs.Nom}"/>
-                <DataGridTextColumn Header="Prix Unitaire" Binding="{Binding PrixUnitaire}"/>
+                <DataGridTemplateColumn Header="Nom" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Prix Unitaire (CAD)" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Quantité" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Quantite, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="18" FontFamily="Carlito"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Quantité à ajouter" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}"
+                                    FontSize="18" FontFamily="Carlito" Width="100"/>
+                                <Button Command="{Binding AjouterFleurCommande}" Content="Ajout"
+                                    FontSize="18" FontFamily="Carlito" Width="100"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Retour" Command="{Binding BoutonRetourCommande}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Button Command="{Binding BoutonRetourCommande}"
+            Content="Retour"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Margin="200"
+            Height="50" Width="110"
+            FontSize="18" FontFamily="Carlito"
+            Background="SeaGreen"
+    />
     </Grid>
 </Window>
