@@ -38,7 +38,7 @@ namespace GestionFleur.Models
 		public bool IsValid()
 		{
 			return !string.IsNullOrEmpty(nom) && !string.IsNullOrEmpty(couleur) && !string.IsNullOrEmpty(description)
-					&&!(prixUnitaire > 0);
+					&& (prixUnitaire > 0);
 		}
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
