@@ -8,6 +8,73 @@
         Title="InterfaceClient" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Commander">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding Fleurs}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Nom" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Prix (CAD)" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="couleur" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Description" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Ajouter" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="3" Grid.Column="0" Content="Placer commande" Margin="5,5,5,5"/>
+                    <Button Grid.Row="3" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5"/>
+                    <Button Grid.Row="3" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Commandes">
+
+            </TabItem>
+            <TabItem Header="Annuler">
+
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
