@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,9 +13,9 @@ namespace GestionFleur.Models
 {
 	internal class Bouquet : INotifyPropertyChanged
 	{
-		
 		[Ignore]
-		public string BouquetId {  get; set; }
+		public int BouquetId { get; set; }
+		[Name("Nom")]
 		public string Nom {  get; set; }
 		[Name("Fleurs")]
 		[NotMapped]
@@ -26,8 +27,8 @@ namespace GestionFleur.Models
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		//Liaison avec la table Bouquet
-		public ICollection<Fleur> Fleurs { get; set; }
-		public ICollection<Commande> Commandes { get; set; }
+		public ICollection<FleursBouquets> Fleurs { get; set; }
+		public ICollection<BouquetsCommandes> Commandes { get; set; }
 
 		public bool IsValid()
 		{

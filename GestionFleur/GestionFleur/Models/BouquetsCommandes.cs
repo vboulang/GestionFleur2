@@ -14,9 +14,13 @@ namespace GestionFleur.Models
 		public int BouquetCommandeId { get; set; }
 
 		[ForeignKey("BouquetId")]
+		public int BouquetId { get; set; }
 		public Bouquet Bouquet { get; set; }
 
 		[ForeignKey("CommandeId")]
+		public int CommandeId { get; set; }
 		public Commande Commande { get; set; }
+
+		public int quantite { get; set; }
 	}
 }

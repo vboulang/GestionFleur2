@@ -91,8 +91,8 @@ namespace GestionFleur.Models
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		//Liaison avec la table Bouquet
-		public ICollection<Bouquet> Bouquets { get; set; }
-		public ICollection<Commande> Commandes { get; set; }
+		public ICollection<FleursBouquets> Bouquets { get; set; }
+		public ICollection<FleursCommandes> Commandes { get; set; }
 		public bool IsValid()
 		{
 			return !string.IsNullOrEmpty(Nom) && !string.IsNullOrEmpty(Couleur) && !string.IsNullOrEmpty(Description)

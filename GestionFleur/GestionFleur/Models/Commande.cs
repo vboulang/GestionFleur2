@@ -16,8 +16,8 @@ namespace GestionFleur.Models
 		public bool PaiementEffectue { get; set; }
 		public event PropertyChangedEventHandler PropertyChanged;
 		//Liaison avec la table Bouquet
-		public ICollection<Fleur> Fleurs { get; set; }
-		public ICollection<Bouquet> Bouquets { get; set; }
+		public ICollection<FleursCommandes> Fleurs { get; set; }
+		public ICollection<BouquetsCommandes> Bouquets { get; set; }
 
 		public int ClientId { get; set; }
 		public Utilisateur Client { get; set; }

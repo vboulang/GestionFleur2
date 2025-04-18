@@ -20,6 +20,9 @@ namespace GestionFleur.ViewModels
 		public DbSet<Utilisateur> Utilisateurs { get; set; }
 		public DbSet<Commande> Commandes { get; set; }
 		public DbSet<Fleur> Fleurs { get; set; }
+		public DbSet<FleursBouquets> FleursBouquets { get; set; }
+		public DbSet<BouquetsCommandes> BouquetsCommandes { get; set; }
+		public DbSet<FleursCommandes> FleursCommandes { get; set; }
 
 		//Les tables de jointure//
 
@@ -45,7 +48,7 @@ namespace GestionFleur.ViewModels
 				.WithMany(u => u.CommandesASuperviser)
 				.HasForeignKey(c => c.VendeurId)
 				.OnDelete(DeleteBehavior.NoAction);
-
+			modelBuilder.Entity<Bouquet>().HasKey(b => b.BouquetId);
 		}
 	}
 }

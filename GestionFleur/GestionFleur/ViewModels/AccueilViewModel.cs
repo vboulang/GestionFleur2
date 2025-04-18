@@ -4,6 +4,7 @@ using System.Windows;
 using CsvHelper;
 using System.Globalization;
 using System.IO;
+using System.Windows.Shapes;
 
 namespace GestionFleur.ViewModels
 {
@@ -18,7 +19,30 @@ namespace GestionFleur.ViewModels
 
 		public RestApiQuery ApiQuery = new RestApiQuery();
 
+		public AccueilViewModel()
+		{
+			UtilisateurEnConnexion = new Models.Utilisateur();
+			GestionFleurContext GFContext = new GestionFleurContext();
+			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
+			List<Fleur> fleurs = GFContext.Fleurs.ToList();
+			List<Bouquet> bouquets = GFContext.Bouquets.ToList();
+			if (fleurs.Count == 0)
+				AddFlowerFromCSVInDB("../../../fleurs_db.csv");
+			if (utilisateurs.Count == 0)
+				AddUserFromApiInDB();
+			if (bouquets.Count == 0)
+				AddBouquetFromCSVInDB("../../../bouquets_db.csv");
 
+			BoutonConnectionCommande = new RelayCommand(
+					o => true,
+					o => BoutonConnection()
+				);
+			BoutonInscriptionCommande = new RelayCommand(
+					o => true,
+					o => BoutonInscription()
+				);
+
+		}
 		public void BoutonInscription()
 		{
 			Views.Inscription inscription = new Views.Inscription();
@@ -71,43 +95,62 @@ namespace GestionFleur.ViewModels
 			MessageBox.Show("Identifiant ou mot de passe incorrect", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
-
-		public AccueilViewModel()
+		public void AddBouquetFromCSVInDB(string path)
 		{
-			UtilisateurEnConnexion = new Models.Utilisateur();
-			GestionFleurContext GFContext = new GestionFleurContext();
-			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
-			List<Fleur> fleurs = GFContext.Fleurs.ToList();
+			using (var reader = new StreamReader(path))
+			using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+			{
+				var records = csv.GetRecords<Models.Bouquet>();
+				GestionFleurContext GFContext = new GestionFleurContext();
 
-			if (utilisateurs.Count == 0)
-				AddUserFromApiInDB();
-			if (fleurs.Count == 0)
-				AddFlowerFromCSVInDB("../../../fleurs_db.csv");
+				foreach (var record in records)
+				{
+					Models.Bouquet nouveauBouquet = new Models.Bouquet();
+					nouveauBouquet = record;
+					nouveauBouquet.MessageCarte = "";
+					GFContext.Bouquets.Add(nouveauBouquet);
+					GFContext.SaveChanges();
+					string[] TabFleurs = nouveauBouquet.FleursCSV.Split(";");
+					int quantite = 0;
+					foreach (string f in TabFleurs)
+					{
+						string[] FleursQt = f.Split();
+						Fleur fleurAAjouter = GFContext.Fleurs.FirstOrDefault(f => f.Nom == FleursQt[0]);
+						if (FleursQt.Count() == 2)
+							quantite = int.Parse(FleursQt[1]);
+						if (fleurAAjouter != null)
+						{
+							nouveauBouquet.PrixUnitaire += fleurAAjouter.PrixUnitaire * quantite;
+							GFContext.Bouquets.Update(nouveauBouquet);
+							GFContext.SaveChanges();
+							FleursBouquets fleursBouquets = new FleursBouquets();
+							fleursBouquets.FleurId = fleurAAjouter.FleurId;
+							fleursBouquets.BouquetId = nouveauBouquet.BouquetId;
+							fleursBouquets.quantite = quantite;
+							GFContext.FleursBouquets.Add(fleursBouquets);
+							GFContext.SaveChanges();
 
-			BoutonConnectionCommande = new RelayCommand(
-					o => true,
-					o => BoutonConnection()
-				);
-			BoutonInscriptionCommande = new RelayCommand(
-					o => true,
-					o => BoutonInscription()
-				);
-
+						}
+					}
+				}
+			}
 		}
 
 		public void AddFlowerFromCSVInDB(string path)
 		{
+			MessageBox.Show(path);
 			using (var reader = new StreamReader(path))
 			using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 			{
 				var records = csv.GetRecords<Models.Fleur>();
 				Models.Fleur nouvellefleur = new Models.Fleur();
 				GestionFleurContext GFContext = new GestionFleurContext();
-
+				MessageBox.Show("lecture fleurs_db.csv");
 				foreach (var record in records)
 				{
 					nouvellefleur = record;
 					nouvellefleur.Quantite = 10;
+					MessageBox.Show(nouvellefleur.Nom);
 					GFContext.Fleurs.Add(nouvellefleur);
 					GFContext.SaveChanges();
 				}
