@@ -22,6 +22,10 @@ namespace GestionFleur.Views
 		public Inscription()
 		{
 			InitializeComponent();
+			ViewModels.InscriptionViewModel insvm = new ViewModels.InscriptionViewModel();
+			DataContext = insvm;
+			if (insvm.FermerFenetre == null)
+				insvm.FermerFenetre = new Action(this.Close);
 		}
 	}
 }
