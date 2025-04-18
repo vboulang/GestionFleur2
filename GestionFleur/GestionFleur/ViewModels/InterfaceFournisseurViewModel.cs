@@ -8,7 +8,6 @@ namespace GestionFleur.ViewModels
 	internal class InterfaceFournisseurViewModel
 	{
 		public ObservableCollection<Fleur> ToutesLesFleurs {  get; set; }
-		Fleur FleurSelectionnee { get; set; }
 		public Action FermerFenetre { get; set; }
 		public ICommand BoutonRetourCommande { get; private set; }
 		public ICommand EnleverFleurCommande { get; private set; }
@@ -23,7 +22,7 @@ namespace GestionFleur.ViewModels
 			);
 			AjouterFleurCommande = new RelayCommand(
 				o => true,
-				o => AjouterFleur()
+				fleur => AjouterFleur(fleur)
 			);
 		}
 
@@ -33,10 +32,11 @@ namespace GestionFleur.ViewModels
 			accueil.Show(); // Affiche la nouvelle fenêtre
 			FermerFenetre();
 		}
-		public void AjouterFleur()
+		public void AjouterFleur(Object fleur)
 		{
-			MessageBox.Show(FleurSelectionnee.Nom + " a été ajouté à la commande");
+			Fleur FleurSelectionnee = (Fleur) fleur;
 			GestionFleurContext GFContext = new GestionFleurContext();
+
 			if(FleurSelectionnee.QuantiteEnAttente > 0)
 			{
 				MessageBox.Show(FleurSelectionnee.Nom + " a été ajouté à la commande");
