@@ -22,7 +22,7 @@ namespace GestionFleur.Views
 		public InterfaceProprietaire()
 		{
 			InitializeComponent();
-			ViewModels.AccueilViewModel propvm = new ViewModels.AccueilViewModel();
+			ViewModels.InterfaceProprietaireViewModel propvm = new ViewModels.InterfaceProprietaireViewModel();
 			DataContext = propvm;
 			if (propvm.FermerFenetre == null)
 				propvm.FermerFenetre = new Action(this.Close);

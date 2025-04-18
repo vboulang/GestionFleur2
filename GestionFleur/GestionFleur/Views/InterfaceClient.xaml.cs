@@ -22,10 +22,10 @@ namespace GestionFleur.Views
 		public InterfaceClient()
 		{
 			InitializeComponent();
-			ViewModels.InterfaceCLientViewModel clientvm = new ViewModels.InterfaceClientViewModel();
+			ViewModels.InterfaceClientViewModel clientvm = new ViewModels.InterfaceClientViewModel();
 			DataContext = clientvm;
-			if (clientvm.FermerFenetre == null)
-				clientvm.FermerFenetre = new Action(this.Close);
+			//if (clientvm.FermerFenetre == null)
+				//clientvm.FermerFenetre = new Action(this.Close);
 		}
 	}
 }

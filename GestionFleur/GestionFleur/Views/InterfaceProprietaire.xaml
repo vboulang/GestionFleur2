@@ -8,6 +8,74 @@
         Title="InterfaceProprietaire" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
     <Grid>
+        <TabControl>
+            <TabItem Header="Fournisseur">
+                <StackPanel Orientation="Horizontal">
+                    <DataGrid 
+                        ItemsSource="{Binding ToutesLesFleurs}"
+                        AutoGenerateColumns="False" CanUserResizeColumns="False"
+                        SelectedItem="{Binding FleurSelectionnee, Mode=TwoWay}"
+                        Width="555"
+                        HorizontalAlignment="Left"
+                        Background="MintCream">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Nom" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"
+                                            FontSize="18" FontFamily="Carlito"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Prix Unitaire (CAD)" Width="110">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}"
+                                            FontSize="18" FontFamily="Carlito"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Quantité" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Quantite, UpdateSourceTrigger=PropertyChanged}"
+                                            FontSize="18" FontFamily="Carlito"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Quantité à ajouter" Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}"
+                                                FontSize="18" FontFamily="Carlito" Width="100"/>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.AjouterFleurCommande}" CommandParameter="{Binding}" 
+                                                Content="Ajout"
+                                                Background="LightGreen"
+                                                FontSize="18" FontFamily="Carlito" Width="100"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Command="{Binding BoutonRetourCommande}"           
+                        Content="Retour"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="170"
+                        Height="50" Width="110"
+                        FontSize="18" FontFamily="Carlito"
+                        Background="SeaGreen"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Facturer">
+
+            </TabItem>
+            <TabItem Header="Annuler">
+
+            </TabItem>
+        </TabControl>
         
     </Grid>
 </Window>

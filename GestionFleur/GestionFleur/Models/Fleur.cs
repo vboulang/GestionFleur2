@@ -95,8 +95,8 @@ namespace GestionFleur.Models
 		public ICollection<Commande> Commandes { get; set; }
 		public bool IsValid()
 		{
-			return !string.IsNullOrEmpty(nom) && !string.IsNullOrEmpty(couleur) && !string.IsNullOrEmpty(description)
-					&&!(prixUnitaire > 0);
+			return !string.IsNullOrEmpty(Nom) && !string.IsNullOrEmpty(Couleur) && !string.IsNullOrEmpty(Description)
+					&&!(PrixUnitaire > 0);
 		}
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
