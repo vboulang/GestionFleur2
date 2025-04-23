@@ -5,7 +5,7 @@
 namespace GestionFleur.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCleanDatabase : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

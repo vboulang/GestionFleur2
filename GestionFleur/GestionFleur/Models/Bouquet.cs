@@ -13,17 +13,46 @@ namespace GestionFleur.Models
 {
 	internal class Bouquet : INotifyPropertyChanged
 	{
+		private string _nom;
+		private string _fleursCSV;
+		private string _messageCarte;
+		private double _prixUnitaire;
+
 		[Ignore]
 		public int BouquetId { get; set; }
 		[Name("Nom")]
-		public string Nom {  get; set; }
+		public string Nom 
+		{  
+			get { return _nom; }
+			set
+			{
+				_nom = value;
+				OnPropertyChanged();
+			}
+		}
 		[Name("Fleurs")]
 		[NotMapped]
 		public string FleursCSV { get; set; }
 		[Ignore]
-		public string MessageCarte {  get; set; }
+		public string MessageCarte 
+		{
+			get { return _messageCarte; }
+			set
+			{
+				_messageCarte = value;
+				OnPropertyChanged();
+			}
+		}
 		[Ignore]
-		public double PrixUnitaire { get; set; }
+		public double PrixUnitaire 
+		{ 
+			get { return _prixUnitaire; }
+			set
+			{
+				_prixUnitaire = value;
+				OnPropertyChanged();
+			}
+		}
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		//Liaison avec la table Bouquet
@@ -32,7 +61,7 @@ namespace GestionFleur.Models
 
 		public bool IsValid()
 		{
-			return !(PrixUnitaire > 0) && !string.IsNullOrEmpty(MessageCarte);
+			return PrixUnitaire > 0; //&& !string.IsNullOrEmpty(MessageCarte);
 		}
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{

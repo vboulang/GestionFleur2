@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionFleur.Migrations
 {
     [DbContext(typeof(GestionFleurContext))]
-    [Migration("20250418232624_InitCleanDatabase")]
-    partial class InitCleanDatabase
+    [Migration("20250423142840_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

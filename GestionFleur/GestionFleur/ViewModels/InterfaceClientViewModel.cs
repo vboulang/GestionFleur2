@@ -14,6 +14,7 @@ namespace GestionFleur.ViewModels
 		public Models.Commande Commande { get; set; }
 		public ObservableCollection<Models.Commande> Commandes { get; set; }
 		public ObservableCollection<Fleur> Fleurs { get; set; }
+		public ObservableCollection<Bouquet> Bouquets { get; set; }
 		public ICommand AjouterCommandeCommand { get; private set; }
 		public ICommand SupprimerCommandeCommand { get; private set; }
 		public ICommand ReinitialiserCommandeCommand { get; private set; }
@@ -21,6 +22,8 @@ namespace GestionFleur.ViewModels
 		{
 			GestionFleurContext GFContext = new GestionFleurContext();
 			Fleurs = new ObservableCollection<Fleur>(GFContext.Fleurs.ToList());
+			Bouquets = new ObservableCollection<Bouquet>(GFContext.Bouquets.ToList());
+
 			Commande = new Models.Commande();
 			Commandes = new ObservableCollection<Models.Commande>();
 			AjouterCommandeCommand = new RelayCommand(
