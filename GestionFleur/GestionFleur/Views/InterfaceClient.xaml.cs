@@ -24,8 +24,13 @@ namespace GestionFleur.Views
 			InitializeComponent();
 			ViewModels.InterfaceClientViewModel clientvm = new ViewModels.InterfaceClientViewModel();
 			DataContext = clientvm;
-			//if (clientvm.FermerFenetre == null)
-				//clientvm.FermerFenetre = new Action(this.Close);
+			if (clientvm.FermerFenetre == null)
+				clientvm.FermerFenetre = new Action(this.Close);
 		}
-	}
+
+		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+        }
+    }
 }

@@ -84,7 +84,7 @@ namespace GestionFleur.Models
 		{
 			get { return _prixUnitaire;}
 			set {
-				_prixUnitaire = value;
+				_prixUnitaire = Math.Round(value,2);
 				OnPropertyChanged();
 			}
 		}

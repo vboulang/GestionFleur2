@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionFleur.Migrations
 {
     [DbContext(typeof(GestionFleurContext))]
-    [Migration("20250423142840_InitDB")]
+    [Migration("20250423191849_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />

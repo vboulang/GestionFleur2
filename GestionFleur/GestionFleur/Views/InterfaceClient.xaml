@@ -23,48 +23,48 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.5*"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding Fleurs}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="4">
+                    <ListView ItemsSource="{Binding Fleurs}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="4" SelectionChanged="ListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Nom" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Prix (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Couleur" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Description" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="70" >
+                                <GridViewColumn Width="85" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Ajouter" Margin="5"/>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.AjouterFleurCommandeCommand }" CommandParameter="{Binding}" Content="Ajouter" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Ajouter bouquet prédéfinis">
@@ -87,35 +87,28 @@
                                 <GridViewColumn Header="Nom" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Prix (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Couleur" Width="100">
+                                <GridViewColumn Width="85" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Description" Width="200">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.AjouterBouquetCommandeCommand }" CommandParameter="{Binding}" Content="Ajouter" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Créer bouquet">
@@ -139,28 +132,28 @@
                                 <GridViewColumn Header="Nom" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Prix (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="couleur" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Description" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -174,11 +167,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="4" Grid.Column="0" Content="Créer Bouquet" Margin="5,5,5,5"/>
-                    <Button Grid.Row="4" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5"/>
+                    <Button Grid.Row="4" Grid.Column="0" Content="Créer Bouquet" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Grid.Row="4" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                     <Label Content="Message personnalisé:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="3" Margin="5,5,5,5" />
                     <TextBox Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" Grid.RowSpan="2"/>
-                    <Button Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Commande en cours">
@@ -198,34 +191,41 @@
                         <RowDefinition Height="0.5*"/>
                     </Grid.RowDefinitions>
                     <Label Content="Fleurs individuelles:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" />
-                    <ListView ItemsSource="{Binding Bouquets}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="2">
+                    <ListView ItemsSource="{Binding FleursCommandees}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Nom" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Prix (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="couleur" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Description" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Quantité Commandée" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -233,43 +233,43 @@
                         </ListView.View>
                     </ListView>
                     <Label Content="Bouquets:" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" />
-                    <ListView ItemsSource="{Binding Bouquets}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4">
+                    <ListView ItemsSource="{Binding BouquetsCommandes}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Nom" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Prix (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PrixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="couleur" Width="100">
+                                <GridViewColumn Header="Message" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Description" Width="200">
+                                <GridViewColumn Header="Quantité Commandée" Width="200">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="5" Grid.Column="0" Content="Placer commande" Margin="5,5,5,5"/>
-                    <Button Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5"/>
-                    <Button Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                    <Button Grid.Row="5" Grid.Column="0" Content="Placer commande" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding ReinitialiserCommandeCommand}" Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Toutes les commandes">
@@ -323,7 +323,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -17,6 +17,7 @@ namespace GestionFleur.Models
 		private string _fleursCSV;
 		private string _messageCarte;
 		private double _prixUnitaire;
+		private int _quantiteEnAttente;
 
 		[Ignore]
 		public int BouquetId { get; set; }
@@ -49,7 +50,18 @@ namespace GestionFleur.Models
 			get { return _prixUnitaire; }
 			set
 			{
-				_prixUnitaire = value;
+				_prixUnitaire = Math.Round(value,2);
+				OnPropertyChanged();
+			}
+		}
+		[Ignore]
+		[NotMapped]
+		public int QuantiteEnAttente
+		{
+			get { return _quantiteEnAttente; }
+			set
+			{
+				_quantiteEnAttente = value;
 				OnPropertyChanged();
 			}
 		}

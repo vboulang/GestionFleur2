@@ -120,7 +120,7 @@ namespace GestionFleur.ViewModels
 							quantite = int.Parse(FleursQt[1]);
 						if (fleurAAjouter != null)
 						{
-							nouveauBouquet.PrixUnitaire += fleurAAjouter.PrixUnitaire * quantite;
+							nouveauBouquet.PrixUnitaire += Math.Round(fleurAAjouter.PrixUnitaire * quantite,2);
 							GFContext.Bouquets.Update(nouveauBouquet);
 							GFContext.SaveChanges();
 							FleursBouquets fleursBouquets = new FleursBouquets();
