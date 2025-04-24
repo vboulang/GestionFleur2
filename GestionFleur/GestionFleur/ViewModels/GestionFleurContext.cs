@@ -41,13 +41,7 @@ namespace GestionFleur.ViewModels
 			modelBuilder.Entity<Commande>()
 				.HasOne(c => c.Client)
 				.WithMany(u => u.CommandesClient)
-				.HasForeignKey(c => c.ClientId)
-				.OnDelete(DeleteBehavior.NoAction);
-			modelBuilder.Entity<Commande>()
-				.HasOne(c => c.Vendeur)
-				.WithMany(u => u.CommandesASuperviser)
-				.HasForeignKey(c => c.VendeurId)
-				.OnDelete(DeleteBehavior.NoAction);
+				.HasForeignKey(c => c.ClientId);
 			modelBuilder.Entity<Bouquet>().HasKey(b => b.BouquetId);
 		}
 	}

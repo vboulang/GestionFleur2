@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class BouquetsCommandes
+	public class BouquetsCommandes
 	{
 		[Key]
 		public int BouquetCommandeId { get; set; }

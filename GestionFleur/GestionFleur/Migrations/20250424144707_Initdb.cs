@@ -5,7 +5,7 @@
 namespace GestionFleur.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class Initdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,8 +95,7 @@ namespace GestionFleur.Migrations
                     TotalTransaction = table.Column<double>(type: "float", nullable: false),
                     TypeDePaiement = table.Column<int>(type: "int", nullable: false),
                     PaiementEffectue = table.Column<bool>(type: "bit", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    VendeurId = table.Column<int>(type: "int", nullable: false)
+                    ClientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,12 +104,8 @@ namespace GestionFleur.Migrations
                         name: "FK_Commandes_Utilisateurs_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Utilisateurs",
-                        principalColumn: "UtilisateurId");
-                    table.ForeignKey(
-                        name: "FK_Commandes_Utilisateurs_VendeurId",
-                        column: x => x.VendeurId,
-                        principalTable: "Utilisateurs",
-                        principalColumn: "UtilisateurId");
+                        principalColumn: "UtilisateurId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,11 +176,6 @@ namespace GestionFleur.Migrations
                 name: "IX_Commandes_ClientId",
                 table: "Commandes",
                 column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Commandes_VendeurId",
-                table: "Commandes",
-                column: "VendeurId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FleursBouquets_BouquetId",

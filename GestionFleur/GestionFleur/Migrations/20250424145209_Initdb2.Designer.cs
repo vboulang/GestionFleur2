@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionFleur.Migrations
 {
     [DbContext(typeof(GestionFleurContext))]
-    [Migration("20250423191849_InitDB")]
-    partial class InitDB
+    [Migration("20250424145209_Initdb2")]
+    partial class Initdb2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,14 +94,9 @@ namespace GestionFleur.Migrations
                     b.Property<int>("TypeDePaiement")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendeurId")
-                        .HasColumnType("int");
-
                     b.HasKey("CommandeId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("VendeurId");
 
                     b.ToTable("Commandes");
                 });
@@ -246,18 +241,10 @@ namespace GestionFleur.Migrations
                     b.HasOne("GestionFleur.Models.Utilisateur", "Client")
                         .WithMany("CommandesClient")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("GestionFleur.Models.Utilisateur", "Vendeur")
-                        .WithMany("CommandesASuperviser")
-                        .HasForeignKey("VendeurId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
-
-                    b.Navigation("Vendeur");
                 });
 
             modelBuilder.Entity("GestionFleur.Models.FleursBouquets", b =>
@@ -321,8 +308,6 @@ namespace GestionFleur.Migrations
 
             modelBuilder.Entity("GestionFleur.Models.Utilisateur", b =>
                 {
-                    b.Navigation("CommandesASuperviser");
-
                     b.Navigation("CommandesClient");
                 });
 #pragma warning restore 612, 618

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class UserToDeserialize
+	public class UserToDeserialize
 	{
 		public List<Utilisateur> users { get; set; }
 	}

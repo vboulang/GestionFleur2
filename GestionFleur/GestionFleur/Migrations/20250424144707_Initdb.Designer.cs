@@ -3,6 +3,7 @@ using GestionFleur.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionFleur.Migrations
 {
     [DbContext(typeof(GestionFleurContext))]
-    partial class GestionFleurContextModelSnapshot : ModelSnapshot
+    [Migration("20250424144707_Initdb")]
+    partial class Initdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace GestionFleur.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BouquetId"));
 
-                    b.Property<int?>("CommandeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("MessageCarte")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -44,8 +44,6 @@ namespace GestionFleur.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("BouquetId");
-
-                    b.HasIndex("CommandeId");
 
                     b.ToTable("Bouquets");
                 });
@@ -111,9 +109,6 @@ namespace GestionFleur.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FleurId"));
 
-                    b.Property<int?>("CommandeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Couleur")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -133,8 +128,6 @@ namespace GestionFleur.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("FleurId");
-
-                    b.HasIndex("CommandeId");
 
                     b.ToTable("Fleurs");
                 });
@@ -224,13 +217,6 @@ namespace GestionFleur.Migrations
                     b.ToTable("Utilisateurs");
                 });
 
-            modelBuilder.Entity("GestionFleur.Models.Bouquet", b =>
-                {
-                    b.HasOne("GestionFleur.Models.Commande", null)
-                        .WithMany("BouquetsToView")
-                        .HasForeignKey("CommandeId");
-                });
-
             modelBuilder.Entity("GestionFleur.Models.BouquetsCommandes", b =>
                 {
                     b.HasOne("GestionFleur.Models.Bouquet", "Bouquet")
@@ -259,13 +245,6 @@ namespace GestionFleur.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("GestionFleur.Models.Fleur", b =>
-                {
-                    b.HasOne("GestionFleur.Models.Commande", null)
-                        .WithMany("FleursToView")
-                        .HasForeignKey("CommandeId");
                 });
 
             modelBuilder.Entity("GestionFleur.Models.FleursBouquets", b =>
@@ -317,11 +296,7 @@ namespace GestionFleur.Migrations
                 {
                     b.Navigation("Bouquets");
 
-                    b.Navigation("BouquetsToView");
-
                     b.Navigation("Fleurs");
-
-                    b.Navigation("FleursToView");
                 });
 
             modelBuilder.Entity("GestionFleur.Models.Fleur", b =>

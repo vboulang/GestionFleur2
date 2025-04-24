@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Utilisateur : INotifyPropertyChanged
+	public class Utilisateur : INotifyPropertyChanged
 	{
 		private string _nom;
 		private string _prenom;
@@ -80,7 +80,6 @@ namespace GestionFleur.Models
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public ICollection<Commande> CommandesClient { get; set; }
-		public ICollection<Commande> CommandesASuperviser { get; set; }
 		
 		private bool _isClient;
 		private bool _isVendeur;

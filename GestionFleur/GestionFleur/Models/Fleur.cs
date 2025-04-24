@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Fleur : INotifyPropertyChanged
+	public class Fleur : INotifyPropertyChanged
 	{
 		private string _nom;
 		private string _couleur;

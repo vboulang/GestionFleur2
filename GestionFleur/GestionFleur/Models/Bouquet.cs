@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GestionFleur.Models
 {
-	internal class Bouquet : INotifyPropertyChanged
+	public class Bouquet : INotifyPropertyChanged
 	{
 		private string _nom;
 		private string _fleursCSV;

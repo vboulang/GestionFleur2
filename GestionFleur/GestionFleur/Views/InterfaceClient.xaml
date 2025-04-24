@@ -160,7 +160,7 @@
                                 <GridViewColumn Width="70" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Ajouter" Margin="5"/>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.AjouterFleurBouquetCommand }" CommandParameter="{Binding}" Content="Ajouter" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -267,7 +267,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="5" Grid.Column="0" Content="Placer commande" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding AjouterCommandeCommand}" Grid.Row="5" Grid.Column="0" Content="Placer commande" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                     <Button Command="{Binding ReinitialiserCommandeCommand}" Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                     <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
                 </Grid>
@@ -292,31 +292,45 @@
                     <ListView ItemsSource="{Binding Commandes}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Nom" Width="100">
+                                <GridViewColumn Header="Id" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding nom, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding CommandeId, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Prix (CAD)" Width="100">
+                                <GridViewColumn Header="Total (CAD)" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding prixUnitaire, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding TotalTransaction, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="couleur" Width="100">
+                                <GridViewColumn Header="Paiement effectué?" Width="105">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding couleur, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding PaiementEffectue, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="Description" Width="200">
+                                <GridViewColumn Header="Fleurs" Width="150">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding TotalFleurs, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Bouquets" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TotalBouquets, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.SupprimerCommandeCommand }" CommandParameter="{Binding}" Content="Annuler" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
