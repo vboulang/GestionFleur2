@@ -19,13 +19,21 @@ namespace GestionFleur.Views
 	/// </summary>
 	public partial class InterfaceVendeur : Window
 	{
-		public InterfaceVendeur()
+		public int UtilisateurId { get; set; }
+
+		public InterfaceVendeur(int utilId)
 		{
+			UtilisateurId = utilId;
 			InitializeComponent();
-			ViewModels.InterfaceVendeurViewModel venvm = new ViewModels.InterfaceVendeurViewModel();
+			ViewModels.InterfaceVendeurViewModel venvm = new ViewModels.InterfaceVendeurViewModel(utilId);
 			DataContext = venvm;
-			//if (venvm.FermerFenetre == null)
-				//venvm.FermerFenetre = new Action(this.Close);
+			if (venvm.FermerFenetre == null)
+				venvm.FermerFenetre = new Action(this.Close);
+		}
+
+		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
 		}
 	}
 }

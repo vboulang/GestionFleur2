@@ -70,7 +70,8 @@ namespace GestionFleur.ViewModels
 							}
 						case "V":
 							{
-								Views.InterfaceVendeur vendeur = new Views.InterfaceVendeur();
+								int id = util.UtilisateurId;
+								Views.InterfaceVendeur vendeur = new Views.InterfaceVendeur(id);
 								vendeur.Show();
 								FermerFenetre();
 								return;
