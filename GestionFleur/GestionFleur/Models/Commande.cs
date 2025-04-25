@@ -18,7 +18,16 @@ namespace GestionFleur.Models
 
 		public double TotalTransaction { get; set; }
 		public TypeDePaiement TypeDePaiement { get; set; }
-		public bool PaiementEffectue { get; set; }
+		private bool _paiementEffectue { get; set; }
+		public bool PaiementEffectue
+		{
+			get { return _paiementEffectue; }
+			set
+			{
+				_paiementEffectue = value;
+				OnPropertyChanged();
+			}
+		}
 		public event PropertyChangedEventHandler PropertyChanged;
 		//Liaison avec la table Bouquet
 		public ICollection<FleursCommandes> Fleurs { get; set; }

@@ -40,6 +40,8 @@ namespace GestionFleur.ViewModels
 				);
 		}
 
+
+		//fonctionnel mail il reste a update en meme temps le paiementefffectuer
 		public void GenererFacture(Object commande)
 		{
 			Models.Commande CommandeSelectionnee = (Models.Commande)commande;
@@ -57,21 +59,28 @@ namespace GestionFleur.ViewModels
 			foreach (BouquetsCommandes bc in bouquetsCommandes)
 			{
 				Bouquet bouquet = GFContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
-				foreach (FleursBouquets fb in bouquet.Fleurs)
+				List<FleursBouquets> fleursbouquets = GFContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
+				foreach (FleursBouquets fb in fleursbouquets)
 				{
 					Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
-					facture += bc.quantite + " " + bouquet.Nom + " à " + Math.Round(bouquet.PrixUnitaire, 2) + "$\n";
 				}
+				facture += bc.quantite + " " + bouquet.Nom + " à " + Math.Round(bouquet.PrixUnitaire, 2) + "$\n";
 			}
 			facture += "Total : " + Math.Round(CommandeSelectionnee.TotalTransaction, 2) + "$\n";
 			Utilisateur vendeur =  GFContext.Utilisateurs.FirstOrDefault(u => u.UtilisateurId == UtilisateurEnConnexionId);
-			facture += "Vendu par : " + vendeur.Nom + "(" + UtilisateurEnConnexionId + ")";
+			facture += "Vendu par : " + vendeur.Prenom + " " + "" + vendeur.Nom + " (" + UtilisateurEnConnexionId + ")\n";
 			facture += "Merci de votre achat !\n";
 			MessageBox.Show(facture, "Facture");
-			CommandeSelectionnee.PaiementEffectue = true;
-			GFContext.Commandes.Update(CommandeSelectionnee);
+			Commande CommandeAnnulee = GFContext.Commandes.FirstOrDefault(c => c.CommandeId == CommandeSelectionnee.CommandeId);
+			if (CommandeAnnulee.PaiementEffectue == false)
+			{
+				CommandeAnnulee.PaiementEffectue = true;
+				GFContext.Commandes.Update(CommandeAnnulee);
+				GFContext.SaveChanges();
+			}
 		}
 
+		//fonctionnelle uniquement s<il ny a pas de bouquet dedans
 		public void SupprimerCommande(Object commande)
 		{
 			Models.Commande CommandeSelectionnee = (Models.Commande)commande;
@@ -88,7 +97,8 @@ namespace GestionFleur.ViewModels
 			foreach (BouquetsCommandes bc in bouquetsCommandes)
 			{
 				Bouquet bouquet = GFContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
-				foreach (FleursBouquets fb in bouquet.Fleurs)
+				List<FleursBouquets> fleursbouquets = GFContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
+				foreach (FleursBouquets fb in fleursbouquets)
 				{
 					Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
 					fleur.Quantite += bc.quantite * fb.quantite;
@@ -98,6 +108,7 @@ namespace GestionFleur.ViewModels
 			}
 			GFContext.Commandes.Remove(CommandeSelectionnee);
 			GFContext.SaveChanges();
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(GFContext.Commandes.ToList());
 		}
 		public void BoutonRetour()
 		{
