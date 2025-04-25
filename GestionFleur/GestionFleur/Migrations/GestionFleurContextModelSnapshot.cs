@@ -167,11 +167,11 @@ namespace GestionFleur.Migrations
 
             modelBuilder.Entity("GestionFleur.Models.FleursCommandes", b =>
                 {
-                    b.Property<int>("BouquetCommandeId")
+                    b.Property<int>("FleurCommandeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BouquetCommandeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FleurCommandeId"));
 
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
@@ -182,7 +182,7 @@ namespace GestionFleur.Migrations
                     b.Property<int>("quantite")
                         .HasColumnType("int");
 
-                    b.HasKey("BouquetCommandeId");
+                    b.HasKey("FleurCommandeId");
 
                     b.HasIndex("CommandeId");
 
@@ -255,17 +255,10 @@ namespace GestionFleur.Migrations
                     b.HasOne("GestionFleur.Models.Utilisateur", "Client")
                         .WithMany("CommandesClient")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("GestionFleur.Models.Fleur", b =>
-                {
-                    b.HasOne("GestionFleur.Models.Commande", null)
-                        .WithMany("FleursToView")
-                        .HasForeignKey("CommandeId");
                 });
 
             modelBuilder.Entity("GestionFleur.Models.FleursBouquets", b =>
