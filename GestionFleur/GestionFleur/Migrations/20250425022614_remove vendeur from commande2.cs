@@ -5,7 +5,7 @@
 namespace GestionFleur.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class removevendeurfromcommande2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,8 +95,7 @@ namespace GestionFleur.Migrations
                     TotalTransaction = table.Column<double>(type: "float", nullable: false),
                     TypeDePaiement = table.Column<int>(type: "int", nullable: false),
                     PaiementEffectue = table.Column<bool>(type: "bit", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    VendeurId = table.Column<int>(type: "int", nullable: false)
+                    ClientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,11 +103,6 @@ namespace GestionFleur.Migrations
                     table.ForeignKey(
                         name: "FK_Commandes_Utilisateurs_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Utilisateurs",
-                        principalColumn: "UtilisateurId");
-                    table.ForeignKey(
-                        name: "FK_Commandes_Utilisateurs_VendeurId",
-                        column: x => x.VendeurId,
                         principalTable: "Utilisateurs",
                         principalColumn: "UtilisateurId");
                 });
@@ -144,7 +138,7 @@ namespace GestionFleur.Migrations
                 name: "FleursCommandes",
                 columns: table => new
                 {
-                    BouquetCommandeId = table.Column<int>(type: "int", nullable: false)
+                    FleurCommandeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FleurId = table.Column<int>(type: "int", nullable: false),
                     CommandeId = table.Column<int>(type: "int", nullable: false),
@@ -152,7 +146,7 @@ namespace GestionFleur.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FleursCommandes", x => x.BouquetCommandeId);
+                    table.PrimaryKey("PK_FleursCommandes", x => x.FleurCommandeId);
                     table.ForeignKey(
                         name: "FK_FleursCommandes_Commandes_CommandeId",
                         column: x => x.CommandeId,
@@ -181,11 +175,6 @@ namespace GestionFleur.Migrations
                 name: "IX_Commandes_ClientId",
                 table: "Commandes",
                 column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Commandes_VendeurId",
-                table: "Commandes",
-                column: "VendeurId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FleursBouquets_BouquetId",

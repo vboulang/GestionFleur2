@@ -11,7 +11,7 @@ namespace GestionFleur.Models
 	internal class FleursCommandes
 	{
 		[Key]
-		public int BouquetCommandeId { get; set; }
+		public int FleurCommandeId { get; set; }
 
 		[ForeignKey("FleurId")]
 		public int FleurId { get; set; }

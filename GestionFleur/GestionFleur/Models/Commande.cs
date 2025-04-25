@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,7 +13,9 @@ namespace GestionFleur.Models
 {
 	internal class Commande : INotifyPropertyChanged
 	{
+		[Key]
 		public int CommandeId { get; set; }
+
 		public double TotalTransaction { get; set; }
 		public TypeDePaiement TypeDePaiement { get; set; }
 		public bool PaiementEffectue { get; set; }
@@ -22,8 +27,6 @@ namespace GestionFleur.Models
 		public int ClientId { get; set; }
 		public Utilisateur Client { get; set; }
 
-		public int VendeurId { get; set; }
-		public Utilisateur Vendeur { get; set; }
 		public bool IsValid()
 		{
 			return !(TotalTransaction >= 0) && !(TypeDePaiement != null);

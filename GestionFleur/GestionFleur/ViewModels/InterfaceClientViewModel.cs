@@ -1,22 +1,24 @@
-﻿using GestionFleur.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GestionFleur.ViewModels
 {
 	internal class InterfaceClientViewModel
 	{
+		public int UtilisateurEnConnexionId { get; set; }
+		public Models.ListeCommande ListeCommandes { get; set; }
 		public Models.Commande CommandePresente { get; set; }
-		public ObservableCollection<Models.Commande> Commandes { get; set; }
-		public ObservableCollection<Fleur> Fleurs { get; set; }
-		public ObservableCollection<Bouquet> Bouquets { get; set; }
-		public ObservableCollection<Fleur> FleursCommandees { get; set; }
-		public ObservableCollection<Bouquet> BouquetsCommandes { get; set; }
+		//public ObservableCollection<Models.Commande> Commandes { get; set; }
+		public ObservableCollection<Models.Fleur> Fleurs { get; set; }
+		public ObservableCollection<Models.Bouquet> Bouquets { get; set; }
+		public ObservableCollection<Models.Fleur> FleursCommandees { get; set; }
+		public ObservableCollection<Models.Bouquet> BouquetsCommandes { get; set; }
 		public ICommand AjouterCommandeCommand { get; private set; }
 		public ICommand SupprimerCommandeCommand { get; private set; }
 		public ICommand ReinitialiserCommandeCommand { get; private set; }
@@ -26,15 +28,17 @@ namespace GestionFleur.ViewModels
 		public ICommand AjouterBouquetCommandeCommand { get; private set; }
 
 		public Action FermerFenetre { get; set; }
-		public InterfaceClientViewModel()
+		public InterfaceClientViewModel(int utilId)
 		{
 			GestionFleurContext GFContext = new GestionFleurContext();
-			Fleurs = new ObservableCollection<Fleur>(GFContext.Fleurs.ToList());
-			Bouquets = new ObservableCollection<Bouquet>(GFContext.Bouquets.ToList());
-			FleursCommandees = new ObservableCollection<Fleur>();
-			BouquetsCommandes = new ObservableCollection<Bouquet>();
+			ListeCommandes = new Models.ListeCommande();
+			UtilisateurEnConnexionId = utilId;
+			Fleurs = new ObservableCollection<Models.Fleur>(GFContext.Fleurs.ToList());
+			Bouquets = new ObservableCollection<Models.Bouquet>(GFContext.Bouquets.ToList());
+			FleursCommandees = new ObservableCollection<Models.Fleur>();
+			BouquetsCommandes = new ObservableCollection<Models.Bouquet>();
 			CommandePresente = new Models.Commande();
-			Commandes = new ObservableCollection<Models.Commande>();
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(GFContext.Commandes.Where(c => c.ClientId == UtilisateurEnConnexionId).ToList());
 			AjouterCommandeCommand = new RelayCommand(
 				o=>true,
 				o=>AjouterCommande()
@@ -66,17 +70,60 @@ namespace GestionFleur.ViewModels
 		}
 		public void AjouterCommande()
 		{
-			//if (Commande.IsValid())
-			//{
-				//Commandes.Add(Commande);
-				//Commande = new Models.Commande();
-			//}
+			Models.Commande CommandePresente = new Models.Commande();
+			GestionFleurContext GFContext = new GestionFleurContext();
+			Models.Utilisateur UtilisateurEnConnexion = GFContext.Utilisateurs.FirstOrDefault(c => c.UtilisateurId == UtilisateurEnConnexionId);
+			CommandePresente.Client = UtilisateurEnConnexion;
+			CommandePresente.TotalTransaction = 0;
+			GFContext.Commandes.Add(CommandePresente);
+			GFContext.SaveChanges();
+			if (FleursCommandees.Count > 0)
+			{
+				foreach (Models.Fleur fleurInCollection in FleursCommandees)
+				{
+					CommandePresente.TotalTransaction += Math.Round(fleurInCollection.PrixUnitaire * fleurInCollection.QuantiteEnAttente, 2);
+					Models.FleursCommandes fleursCommandes = new Models.FleursCommandes();
+					fleursCommandes.FleurId = fleurInCollection.FleurId;
+					fleursCommandes.CommandeId = CommandePresente.CommandeId;
+					fleursCommandes.quantite = fleurInCollection.QuantiteEnAttente;
+					GFContext.FleursCommandes.Add(fleursCommandes);
+					GFContext.SaveChanges();
+					fleurInCollection.Quantite -= fleurInCollection.QuantiteEnAttente;
+					fleurInCollection.QuantiteEnAttente = 0;
+				}
+			}
+			if (BouquetsCommandes.Count > 0)
+			{
+				foreach (Models.Bouquet bouquetInCollection in BouquetsCommandes)
+				{
+					CommandePresente.TotalTransaction += Math.Round(bouquetInCollection.PrixUnitaire * bouquetInCollection.QuantiteEnAttente, 2);
+					Models.BouquetsCommandes bouquetsCommandes = new Models.BouquetsCommandes();
+					bouquetsCommandes.BouquetId = bouquetInCollection.BouquetId;
+					bouquetsCommandes.CommandeId = CommandePresente.CommandeId;
+					bouquetsCommandes.quantite = bouquetInCollection.QuantiteEnAttente;
+					GFContext.BouquetsCommandes.Add(bouquetsCommandes);
+					GFContext.SaveChanges();
+					List<Models.FleursBouquets> fleursInBouquet = GFContext.FleursBouquets.Where(f => f.BouquetId == bouquetInCollection.BouquetId).ToList();
+					foreach (Models.FleursBouquets fleur in fleursInBouquet)
+					{
+						Models.Fleur f = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fleur.FleurId);
+						f.Quantite -= bouquetInCollection.QuantiteEnAttente * fleur.quantite;
+						GFContext.SaveChanges();
+					}
+					bouquetInCollection.QuantiteEnAttente = 0;
+				}
+			}
+			GFContext.SaveChanges();
+			FleursCommandees.Clear();
+			BouquetsCommandes.Clear();
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(GFContext.Commandes.Where(c => c.ClientId == UtilisateurEnConnexionId).ToList());
+			MessageBox.Show(ListeCommandes.Commandes.Count().ToString());
 		}
 		public void AjouterFleurCommande(Object fleur)
 		{
-			Fleur fleurAAjouter = (Fleur)fleur;
+			Models.Fleur fleurAAjouter = (Models.Fleur)fleur;
 			GestionFleurContext GFContext = new GestionFleurContext();
-			foreach(Fleur fleurInCollection in FleursCommandees)
+			foreach(Models.Fleur fleurInCollection in FleursCommandees)
 			{
 				if (fleurInCollection.Nom == fleurAAjouter.Nom)
 				{
@@ -97,9 +144,9 @@ namespace GestionFleur.ViewModels
 		}
 		public void AjouterBouquetCommande(Object bouquet)
 		{
-			Bouquet bouquetAAjouter = (Bouquet)bouquet;
+			Models.Bouquet bouquetAAjouter = (Models.Bouquet)bouquet;
 			GestionFleurContext GFContext = new GestionFleurContext();
-			foreach (Bouquet bouquetInCollection in BouquetsCommandes)
+			foreach (Models.Bouquet bouquetInCollection in BouquetsCommandes)
 			{
 				if (bouquetInCollection.Nom == bouquetAAjouter.Nom)
 				{
@@ -118,14 +165,14 @@ namespace GestionFleur.ViewModels
 		}
 		public void ReinitialiserCommande()
 		{
-			foreach (Fleur fleurInCollection in FleursCommandees)
+			foreach (Models.Fleur fleurInCollection in FleursCommandees)
 			{
 				if (fleurInCollection.QuantiteEnAttente > 0)
 				{
 					fleurInCollection.QuantiteEnAttente = 0;
 				}
 			}
-			foreach (Bouquet bouquetInCollection in BouquetsCommandes)
+			foreach (Models.Bouquet bouquetInCollection in BouquetsCommandes)
 			{
 				if (bouquetInCollection.QuantiteEnAttente > 0)
 				{

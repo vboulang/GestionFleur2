@@ -80,7 +80,6 @@ namespace GestionFleur.Models
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public ICollection<Commande> CommandesClient { get; set; }
-		public ICollection<Commande> CommandesASuperviser { get; set; }
 		
 		private bool _isClient;
 		private bool _isVendeur;

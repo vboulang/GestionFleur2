@@ -91,14 +91,9 @@ namespace GestionFleur.Migrations
                     b.Property<int>("TypeDePaiement")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendeurId")
-                        .HasColumnType("int");
-
                     b.HasKey("CommandeId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("VendeurId");
 
                     b.ToTable("Commandes");
                 });
@@ -162,11 +157,11 @@ namespace GestionFleur.Migrations
 
             modelBuilder.Entity("GestionFleur.Models.FleursCommandes", b =>
                 {
-                    b.Property<int>("BouquetCommandeId")
+                    b.Property<int>("FleurCommandeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BouquetCommandeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FleurCommandeId"));
 
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
@@ -177,7 +172,7 @@ namespace GestionFleur.Migrations
                     b.Property<int>("quantite")
                         .HasColumnType("int");
 
-                    b.HasKey("BouquetCommandeId");
+                    b.HasKey("FleurCommandeId");
 
                     b.HasIndex("CommandeId");
 
@@ -246,15 +241,7 @@ namespace GestionFleur.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("GestionFleur.Models.Utilisateur", "Vendeur")
-                        .WithMany("CommandesASuperviser")
-                        .HasForeignKey("VendeurId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Client");
-
-                    b.Navigation("Vendeur");
                 });
 
             modelBuilder.Entity("GestionFleur.Models.FleursBouquets", b =>
@@ -318,8 +305,6 @@ namespace GestionFleur.Migrations
 
             modelBuilder.Entity("GestionFleur.Models.Utilisateur", b =>
                 {
-                    b.Navigation("CommandesASuperviser");
-
                     b.Navigation("CommandesClient");
                 });
 #pragma warning restore 612, 618

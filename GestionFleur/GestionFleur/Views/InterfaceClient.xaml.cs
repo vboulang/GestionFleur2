@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,13 @@ namespace GestionFleur.Views
 	/// </summary>
 	public partial class InterfaceClient : Window
 	{
-		public InterfaceClient()
+		public int UtilisateurId { get; set; }
+
+		public InterfaceClient(int utilId)
 		{
+			UtilisateurId = utilId;
 			InitializeComponent();
-			ViewModels.InterfaceClientViewModel clientvm = new ViewModels.InterfaceClientViewModel();
+			ViewModels.InterfaceClientViewModel clientvm = new ViewModels.InterfaceClientViewModel(UtilisateurId);
 			DataContext = clientvm;
 			if (clientvm.FermerFenetre == null)
 				clientvm.FermerFenetre = new Action(this.Close);

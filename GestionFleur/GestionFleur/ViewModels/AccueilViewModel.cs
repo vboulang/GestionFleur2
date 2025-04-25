@@ -84,7 +84,8 @@ namespace GestionFleur.ViewModels
 							}
 						case "C":
 							{
-								Views.InterfaceClient client = new Views.InterfaceClient();
+								int id = util.UtilisateurId;
+								Views.InterfaceClient client = new Views.InterfaceClient(id);
 								client.Show();
 								FermerFenetre();
 								return;
