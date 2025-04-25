@@ -15,7 +15,7 @@ namespace GestionFleur.Models
 	{
 		private string _nom;
 		private string _fleursCSV;
-		private string _messageCarte;
+		private string _messageCarte, _tempMessageCarte;
 		private double _prixUnitaire;
 		private int _quantiteEnAttente;
 
@@ -62,6 +62,17 @@ namespace GestionFleur.Models
 			set
 			{
 				_quantiteEnAttente = value;
+				OnPropertyChanged();
+			}
+		}
+		[Ignore]
+		[NotMapped]
+		public string TempMessageCarte
+		{
+			get { return _tempMessageCarte; }
+			set
+			{
+				_tempMessageCarte = value;
 				OnPropertyChanged();
 			}
 		}

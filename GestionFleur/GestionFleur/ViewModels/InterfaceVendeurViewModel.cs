@@ -19,13 +19,14 @@ namespace GestionFleur.ViewModels
 		public ICommand GenererFactureCommand { get; private set; }
 		public ICommand BoutonRetourCommande { get; private set; }
 		public Action FermerFenetre { get; set; }
+		private GestionFleurContext _gestionFleurContext;
 
 		public InterfaceVendeurViewModel(int utilId)
 		{
-			GestionFleurContext GFContext = new GestionFleurContext();
+			_gestionFleurContext = new GestionFleurContext();
 			ListeCommandes = new Models.ListeCommande();
 			UtilisateurEnConnexionId = utilId;
-			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(GFContext.Commandes.ToList());
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.ToList());
 			SupprimerCommandeCommand = new RelayCommand(
 				o => true,
 				commande => SupprimerCommande(commande)
@@ -45,38 +46,54 @@ namespace GestionFleur.ViewModels
 		public void GenererFacture(Object commande)
 		{
 			Models.Commande CommandeSelectionnee = (Models.Commande)commande;
-			GestionFleurContext GFContext = new GestionFleurContext();
-			List<FleursCommandes> fleursCommandes = GFContext.FleursCommandes.Where(f => f.CommandeId == CommandeSelectionnee.CommandeId).ToList();
-			List<BouquetsCommandes> bouquetsCommandes = GFContext.BouquetsCommandes.Where(b => b.CommandeId == CommandeSelectionnee.CommandeId).ToList();
+			List<FleursCommandes> fleursCommandes = _gestionFleurContext.FleursCommandes.Where(f => f.CommandeId == CommandeSelectionnee.CommandeId).ToList();
+			List<BouquetsCommandes> bouquetsCommandes = _gestionFleurContext.BouquetsCommandes.Where(b => b.CommandeId == CommandeSelectionnee.CommandeId).ToList();
 			string facture = "Facture de la commande " + CommandeSelectionnee.CommandeId + "\n";
-			facture += "Fleurs commandées :\n";
-			foreach (FleursCommandes fc in fleursCommandes)
+			
+			if(fleursCommandes.Count() != 0)
 			{
-				Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fc.FleurId);
-				facture += fc.quantite + " " + fleur.Nom + " à " + Math.Round(fleur.PrixUnitaire, 2) + "$\n";
-			}
-			facture += "Bouquets commandés :\n";
-			foreach (BouquetsCommandes bc in bouquetsCommandes)
-			{
-				Bouquet bouquet = GFContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
-				List<FleursBouquets> fleursbouquets = GFContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
-				foreach (FleursBouquets fb in fleursbouquets)
+				facture += "Fleurs commandées :\n";
+				foreach (FleursCommandes fc in fleursCommandes)
 				{
-					Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
+					Fleur fleur = _gestionFleurContext.Fleurs.FirstOrDefault(f => f.FleurId == fc.FleurId);
+					facture += fc.quantite + " " + fleur.Nom + " à " + Math.Round(fleur.PrixUnitaire, 2) + "$\n";
 				}
-				facture += bc.quantite + " " + bouquet.Nom + " à " + Math.Round(bouquet.PrixUnitaire, 2) + "$\n";
 			}
+			else
+			{
+				facture += "Aucune fleur individuelle commandée\n";
+			}
+
+			if (bouquetsCommandes.Count() != 0)
+			{
+				facture += "Bouquets commandés :\n";
+				foreach (BouquetsCommandes bc in bouquetsCommandes)
+				{
+					Bouquet bouquet = _gestionFleurContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
+					List<FleursBouquets> fleursbouquets = _gestionFleurContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
+					foreach (FleursBouquets fb in fleursbouquets)
+					{
+						Fleur fleur = _gestionFleurContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
+					}
+					facture += bc.quantite + " " + bouquet.Nom + " à " + Math.Round(bouquet.PrixUnitaire, 2) + "$\n";
+				}
+			}
+			else
+			{
+				facture += "Aucun bouquet commandé\n";
+			}
+			
 			facture += "Total : " + Math.Round(CommandeSelectionnee.TotalTransaction, 2) + "$\n";
-			Utilisateur vendeur =  GFContext.Utilisateurs.FirstOrDefault(u => u.UtilisateurId == UtilisateurEnConnexionId);
+			Utilisateur vendeur = _gestionFleurContext.Utilisateurs.FirstOrDefault(u => u.UtilisateurId == UtilisateurEnConnexionId);
 			facture += "Vendu par : " + vendeur.Prenom + " " + "" + vendeur.Nom + " (" + UtilisateurEnConnexionId + ")\n";
 			facture += "Merci de votre achat !\n";
 			MessageBox.Show(facture, "Facture");
-			Commande CommandeAnnulee = GFContext.Commandes.FirstOrDefault(c => c.CommandeId == CommandeSelectionnee.CommandeId);
+			Commande CommandeAnnulee = _gestionFleurContext.Commandes.FirstOrDefault(c => c.CommandeId == CommandeSelectionnee.CommandeId);
 			if (CommandeAnnulee.PaiementEffectue == false)
 			{
 				CommandeAnnulee.PaiementEffectue = true;
-				GFContext.Commandes.Update(CommandeAnnulee);
-				GFContext.SaveChanges();
+				_gestionFleurContext.Commandes.Update(CommandeAnnulee);
+				_gestionFleurContext.SaveChanges();
 			}
 		}
 
@@ -84,31 +101,30 @@ namespace GestionFleur.ViewModels
 		public void SupprimerCommande(Object commande)
 		{
 			Models.Commande CommandeSelectionnee = (Models.Commande)commande;
-			GestionFleurContext GFContext = new GestionFleurContext();
-			List<FleursCommandes> fleursCommandes = GFContext.FleursCommandes.Where(f => f.CommandeId == CommandeSelectionnee.CommandeId).ToList();
-			List<BouquetsCommandes> bouquetsCommandes = GFContext.BouquetsCommandes.Where(b => b.CommandeId == CommandeSelectionnee.CommandeId).ToList();
+			List<FleursCommandes> fleursCommandes = _gestionFleurContext.FleursCommandes.Where(f => f.CommandeId == CommandeSelectionnee.CommandeId).ToList();
+			List<BouquetsCommandes> bouquetsCommandes = _gestionFleurContext.BouquetsCommandes.Where(b => b.CommandeId == CommandeSelectionnee.CommandeId).ToList();
 			foreach (FleursCommandes fc in fleursCommandes)
 			{
-				Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fc.FleurId);
+				Fleur fleur = _gestionFleurContext.Fleurs.FirstOrDefault(f => f.FleurId == fc.FleurId);
 				fleur.Quantite += fc.quantite;
-				GFContext.Fleurs.Update(fleur);
-				GFContext.SaveChanges();
+				_gestionFleurContext.Fleurs.Update(fleur);
+				_gestionFleurContext.SaveChanges();
 			}
 			foreach (BouquetsCommandes bc in bouquetsCommandes)
 			{
-				Bouquet bouquet = GFContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
-				List<FleursBouquets> fleursbouquets = GFContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
+				Bouquet bouquet = _gestionFleurContext.Bouquets.FirstOrDefault(b => b.BouquetId == bc.BouquetId);
+				List<FleursBouquets> fleursbouquets = _gestionFleurContext.FleursBouquets.Where(f => f.BouquetId == bouquet.BouquetId).ToList();
 				foreach (FleursBouquets fb in fleursbouquets)
 				{
-					Fleur fleur = GFContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
+					Fleur fleur = _gestionFleurContext.Fleurs.FirstOrDefault(f => f.FleurId == fb.FleurId);
 					fleur.Quantite += bc.quantite * fb.quantite;
-					GFContext.Fleurs.Update(fleur);
-					GFContext.SaveChanges();
+					_gestionFleurContext.Fleurs.Update(fleur);
+					_gestionFleurContext.SaveChanges();
 				}
 			}
-			GFContext.Commandes.Remove(CommandeSelectionnee);
-			GFContext.SaveChanges();
-			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(GFContext.Commandes.ToList());
+			_gestionFleurContext.Commandes.Remove(CommandeSelectionnee);
+			_gestionFleurContext.SaveChanges();
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.ToList());
 		}
 		public void BoutonRetour()
 		{
