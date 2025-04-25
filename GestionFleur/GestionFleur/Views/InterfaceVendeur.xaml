@@ -23,7 +23,7 @@
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         <Label Content="Commandes:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" />
-        <ListView ItemsSource="{Binding ListeCommandes.Commandes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5">
+        <ListView ItemsSource="{Binding ListeCommandes.Commandes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="100">
@@ -43,7 +43,7 @@
                     <GridViewColumn Header="Paiement effectué?" Width="105">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding PaiementEffectue, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                <TextBlock Text="{Binding PaiementEffectue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

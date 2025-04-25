@@ -1,5 +1,4 @@
-﻿using GestionFleur.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -7,7 +6,7 @@ namespace GestionFleur.ViewModels
 {
 	internal class InterfaceFournisseurViewModel
 	{
-		public ObservableCollection<Fleur> ToutesLesFleurs {  get; set; }
+		public ObservableCollection<Models.Fleur> ToutesLesFleurs {  get; set; }
 		public Action FermerFenetre { get; set; }
 		public ICommand BoutonRetourCommande { get; private set; }
 		public ICommand EnleverFleurCommande { get; private set; }
@@ -15,7 +14,7 @@ namespace GestionFleur.ViewModels
 		public InterfaceFournisseurViewModel()
 		{
 			GestionFleurContext GFContext = new GestionFleurContext();
-			ToutesLesFleurs = new ObservableCollection<Fleur>(GFContext.Fleurs);
+			ToutesLesFleurs = new ObservableCollection<Models.Fleur>(GFContext.Fleurs);
 			BoutonRetourCommande = new RelayCommand(
 				o => true,
 				o => BoutonRetour()
@@ -34,7 +33,7 @@ namespace GestionFleur.ViewModels
 		}
 		public void AjouterFleur(Object fleur)
 		{
-			Fleur FleurSelectionnee = (Fleur) fleur;
+			Models.Fleur FleurSelectionnee = (Models.Fleur) fleur;
 			GestionFleurContext GFContext = new GestionFleurContext();
 
 			if(FleurSelectionnee.QuantiteEnAttente > 0)

@@ -25,6 +25,7 @@ namespace GestionFleur.ViewModels
 		public ICommand SupprimerCommandeCommand { get; private set; }
 		public ICommand ReinitialiserCommandeCommand { get; private set; }
 		public ICommand BoutonRetourCommande { get; private set; }
+		public ICommand ReinitialiserBouquetCommand { get; private set; }
 		public ICommand AjouterFleurCommandeCommand { get; private set; }
 		public ICommand AjouterFleurBouquetCommand { get; private set; }
 		public ICommand AjouterBouquetCommandeCommand { get; private set; }
@@ -37,7 +38,7 @@ namespace GestionFleur.ViewModels
 			ListeCommandes = new Models.ListeCommande();
 			UtilisateurEnConnexionId = utilId;
 			Fleurs = new ObservableCollection<Models.Fleur>(_gestionFleurContext.Fleurs.ToList());
-			Bouquets = new ObservableCollection<Models.Bouquet>(_gestionFleurContext.Bouquets.ToList());
+			Bouquets = new ObservableCollection<Models.Bouquet>(_gestionFleurContext.Bouquets.Where(b=>b.BouquetId <= 15).ToList());
 			FleursCommandees = new ObservableCollection<Models.Fleur>();
 			BouquetsCommandes = new ObservableCollection<Models.Bouquet>();
 			FleursAAjouterBouquet = new ObservableCollection<Models.Fleur>();
@@ -45,7 +46,7 @@ namespace GestionFleur.ViewModels
 			BouquetPerso = new Models.Bouquet();
 			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.Where(c => c.ClientId == UtilisateurEnConnexionId).ToList());
 			AjouterCommandeCommand = new RelayCommand(
-				o=>true,
+				o=>FleursCommandees.Count() > 0 || BouquetsCommandes.Count() > 0,
 				o=>AjouterCommande()
 				);
 			AjouterFleurCommandeCommand = new RelayCommand(
@@ -57,7 +58,7 @@ namespace GestionFleur.ViewModels
 				fleur => AjouterFleurBouquet(fleur)
 				);
 			CreerBouquetPersoCommand = new RelayCommand(
-				o => true,
+				o => BouquetPerso.IsValid() && FleursAAjouterBouquet.Count()>0,
 				o => CreerBouquet()
 				);
 			AjouterBouquetCommandeCommand = new RelayCommand(
@@ -71,6 +72,10 @@ namespace GestionFleur.ViewModels
 			ReinitialiserCommandeCommand = new RelayCommand(
 				o=>true,
 				o=>ReinitialiserCommande()
+				);
+			ReinitialiserBouquetCommand = new RelayCommand(
+				o => true,
+				o => ReinitialiserBouquet()
 				);
 			BoutonRetourCommande = new RelayCommand(
 				o => true,
@@ -147,20 +152,15 @@ namespace GestionFleur.ViewModels
 			{
 				if (fleurInCollection.Nom == fleurAAjouter.Nom)
 				{
-					fleurInCollection.QuantiteEnAttente += 1;
+					fleurInCollection.QuantiteEnAttenteBPerso += 1;
 					return;
 				}
 			}
-			fleurAAjouter.QuantiteEnAttente += 1;
+			fleurAAjouter.QuantiteEnAttenteBPerso += 1;
 			FleursAAjouterBouquet.Add(fleurAAjouter);
 		}
 		public void CreerBouquet()
 		{
-			if(BouquetPerso.TempMessageCarte == null || BouquetPerso.TempMessageCarte == "")
-			{
-				MessageBox.Show("Veuillez entrer un message pour la carte");
-				return;
-			}
 			BouquetPerso.MessageCarte = BouquetPerso.TempMessageCarte;
 			BouquetPerso.Nom = "Bouquet personnalisé";
 			BouquetPerso.QuantiteEnAttente += 1;
@@ -168,11 +168,12 @@ namespace GestionFleur.ViewModels
 			_gestionFleurContext.SaveChanges();
 			foreach (Models.Fleur fleurInCollection in FleursAAjouterBouquet)
 			{
-				BouquetPerso.PrixUnitaire += Math.Round(fleurInCollection.PrixUnitaire * fleurInCollection.QuantiteEnAttente, 2);
+				BouquetPerso.PrixUnitaire += Math.Round(fleurInCollection.PrixUnitaire * fleurInCollection.QuantiteEnAttenteBPerso, 2);
 				Models.FleursBouquets fleursBouquets = new Models.FleursBouquets();
 				fleursBouquets.BouquetId = BouquetPerso.BouquetId;
 				fleursBouquets.FleurId = fleurInCollection.FleurId;
-				fleursBouquets.quantite = fleurInCollection.QuantiteEnAttente;
+				fleursBouquets.quantite = fleurInCollection.QuantiteEnAttenteBPerso;
+				fleurInCollection.QuantiteEnAttenteBPerso = 0;
 				_gestionFleurContext.FleursBouquets.Add(fleursBouquets);
 				_gestionFleurContext.SaveChanges();
 			}
@@ -225,6 +226,21 @@ namespace GestionFleur.ViewModels
 			_gestionFleurContext.SaveChanges();
 			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.ToList());
 		}
+		public void ReinitialiserBouquet()
+		{
+			foreach (Models.Fleur fleurInCollection in FleursAAjouterBouquet)
+			{
+				if (fleurInCollection.QuantiteEnAttenteBPerso > 0)
+				{
+					fleurInCollection.QuantiteEnAttenteBPerso = 0;
+				}
+			}
+			FleursAAjouterBouquet.Clear();
+			BouquetPerso.PrixUnitaire = 0;
+			BouquetPerso.MessageCarte = "";
+			BouquetPerso.TempMessageCarte = "";
+			BouquetPerso = new Models.Bouquet();
+		}
 		public void ReinitialiserCommande()
 		{
 			foreach (Models.Fleur fleurInCollection in FleursCommandees)
@@ -241,18 +257,8 @@ namespace GestionFleur.ViewModels
 					bouquetInCollection.QuantiteEnAttente = 0;
 				}
 			}
-			int i = FleursCommandees.Count() - 1;
-			while(i >= 0)
-			{
-				FleursCommandees.Remove(FleursCommandees[i]);
-				i--;
-			}
-			i = BouquetsCommandes.Count() - 1;
-			while (i >= 0)
-			{
-				BouquetsCommandes.Remove(BouquetsCommandes[i]);
-				i--;
-			}
+			FleursCommandees.Clear();
+			BouquetsCommandes.Clear();
 			CommandePresente.TotalTransaction = 0;
 			CommandePresente = new Models.Commande();
 		}

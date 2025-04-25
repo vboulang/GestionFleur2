@@ -84,7 +84,7 @@ namespace GestionFleur.Models
 
 		public bool IsValid()
 		{
-			return PrixUnitaire > 0; //&& !string.IsNullOrEmpty(MessageCarte);
+			return !string.IsNullOrEmpty(TempMessageCarte);
 		}
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{

@@ -81,7 +81,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.5*"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding Bouquets}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="4">
+                    <ListView ItemsSource="{Binding Bouquets}"   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="4">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Nom" Width="100">
@@ -169,7 +169,7 @@
                         </ListView.View>
                     </ListView>
                     <Button Command="{Binding CreerBouquetPersoCommand}" Grid.Row="5" Grid.Column="0" Content="Créer Bouquet" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
-                    <Button Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
+                    <Button Command="{Binding ReinitialiserBouquetCommand}" Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
                     <Label Content="Message personnalisé:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" />
                     <TextBox Text="{Binding BouquetPerso.TempMessageCarte, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" Grid.RowSpan="2"/>
                     <Label Content="Contenu du bouquet personnalisé:" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="3" Margin="5,5,5,5" />
@@ -186,7 +186,7 @@
                                 <GridViewColumn Header="Quantite" Width="80">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding QuantiteEnAttente, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                            <TextBlock Text="{Binding QuantiteEnAttenteBPerso, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

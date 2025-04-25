@@ -1,5 +1,4 @@
-﻿using GestionFleur.Models;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace GestionFleur.ViewModels
@@ -27,12 +26,12 @@ namespace GestionFleur.ViewModels
 		public void BoutonInscription()
 		{
 			GestionFleurContext GFContext = new GestionFleurContext();
-			Utilisateur utilisateurPresent = GFContext.Utilisateurs.FirstOrDefault(u => u.Identifiant == NouvelUtilisateur.Identifiant);
+			Models.Utilisateur utilisateurPresent = GFContext.Utilisateurs.FirstOrDefault(u => u.Identifiant == NouvelUtilisateur.Identifiant);
 			if(utilisateurPresent != null )
 				MessageBox.Show("Nom d'utilisateur déjà attribué", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 			else
 			{
-				Utilisateur nouvelUtilisateurdb = new Utilisateur();
+				Models.Utilisateur nouvelUtilisateurdb = new Models.Utilisateur();
 				nouvelUtilisateurdb.Nom = NouvelUtilisateur.Nom;
 				nouvelUtilisateurdb.Prenom = NouvelUtilisateur.Prenom;
 				nouvelUtilisateurdb.Identifiant = NouvelUtilisateur.Identifiant;

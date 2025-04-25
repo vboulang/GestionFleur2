@@ -25,15 +25,11 @@ namespace GestionFleur.Views
 		{
 			UtilisateurId = utilId;
 			InitializeComponent();
-			ViewModels.InterfaceVendeurViewModel venvm = new ViewModels.InterfaceVendeurViewModel(utilId);
+			ViewModels.InterfaceVendeurViewModel venvm = new ViewModels.InterfaceVendeurViewModel(UtilisateurId);
 			DataContext = venvm;
 			if (venvm.FermerFenetre == null)
 				venvm.FermerFenetre = new Action(this.Close);
 		}
 
-		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-		}
 	}
 }

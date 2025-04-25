@@ -18,7 +18,7 @@ namespace GestionFleur.Models
 
 		public double TotalTransaction { get; set; }
 		public TypeDePaiement TypeDePaiement { get; set; }
-		private bool _paiementEffectue { get; set; }
+		private bool _paiementEffectue;
 		public bool PaiementEffectue
 		{
 			get { return _paiementEffectue; }

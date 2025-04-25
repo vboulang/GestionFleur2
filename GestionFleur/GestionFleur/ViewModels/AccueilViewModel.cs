@@ -1,5 +1,4 @@
-﻿using GestionFleur.Models;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows;
 using CsvHelper;
 using System.Globalization;
@@ -23,9 +22,9 @@ namespace GestionFleur.ViewModels
 		{
 			UtilisateurEnConnexion = new Models.Utilisateur();
 			GestionFleurContext GFContext = new GestionFleurContext();
-			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
-			List<Fleur> fleurs = GFContext.Fleurs.ToList();
-			List<Bouquet> bouquets = GFContext.Bouquets.ToList();
+			List<Models.Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
+			List<Models.Fleur> fleurs = GFContext.Fleurs.ToList();
+			List<Models.Bouquet> bouquets = GFContext.Bouquets.ToList();
 			if (fleurs.Count == 0)
 				AddFlowerFromCSVInDB("../../../fleurs_db.csv");
 			if (utilisateurs.Count == 0)
@@ -54,23 +53,23 @@ namespace GestionFleur.ViewModels
 		public void BoutonConnection()
 		{
 			GestionFleurContext GFContext = new GestionFleurContext();
-			List<Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
-			foreach (Utilisateur util in utilisateurs)
+			List<Models.Utilisateur> utilisateurs = GFContext.Utilisateurs.ToList();
+			foreach (Models.Utilisateur util in utilisateurs)
 			{
 				if (UtilisateurEnConnexion.Identifiant == util.Identifiant && UtilisateurEnConnexion.MotDePasse == util.MotDePasse)
 				{
+					int id = util.UtilisateurId;
 					switch (util.Type)
 					{
 						case "P":
 							{
-								Views.InterfaceProprietaire proprietaire = new Views.InterfaceProprietaire();
+								Views.InterfaceProprietaire proprietaire = new Views.InterfaceProprietaire(id);
 								proprietaire.Show();
 								FermerFenetre();
 								return;
 							}
 						case "V":
 							{
-								int id = util.UtilisateurId;
 								Views.InterfaceVendeur vendeur = new Views.InterfaceVendeur(id);
 								vendeur.Show();
 								FermerFenetre();
@@ -85,7 +84,6 @@ namespace GestionFleur.ViewModels
 							}
 						case "C":
 							{
-								int id = util.UtilisateurId;
 								Views.InterfaceClient client = new Views.InterfaceClient(id);
 								client.Show();
 								FermerFenetre();
@@ -117,7 +115,7 @@ namespace GestionFleur.ViewModels
 					foreach (string f in TabFleurs)
 					{
 						string[] FleursQt = f.Split();
-						Fleur fleurAAjouter = GFContext.Fleurs.FirstOrDefault(f => f.Nom == FleursQt[0]);
+						Models.Fleur fleurAAjouter = GFContext.Fleurs.FirstOrDefault(f => f.Nom == FleursQt[0]);
 						if (FleursQt.Count() == 2)
 							quantite = int.Parse(FleursQt[1]);
 						if (fleurAAjouter != null)
@@ -125,7 +123,7 @@ namespace GestionFleur.ViewModels
 							nouveauBouquet.PrixUnitaire += Math.Round(fleurAAjouter.PrixUnitaire * quantite,2);
 							GFContext.Bouquets.Update(nouveauBouquet);
 							GFContext.SaveChanges();
-							FleursBouquets fleursBouquets = new FleursBouquets();
+							Models.FleursBouquets fleursBouquets = new Models.FleursBouquets();
 							fleursBouquets.FleurId = fleurAAjouter.FleurId;
 							fleursBouquets.BouquetId = nouveauBouquet.BouquetId;
 							fleursBouquets.quantite = quantite;
@@ -161,21 +159,21 @@ namespace GestionFleur.ViewModels
 
 		public void AddUserFromApiInDB()
 		{
-			List<Utilisateur> proprietaire = ApiQuery.GetUtilisateurs("users?limit=1&select=firstName,lastName,username,password");
-			List<Utilisateur> vendeurs = ApiQuery.GetUtilisateurs("users?limit=5&skip=1&select=firstName,lastName,username,password");
-			List<Utilisateur> fournisseurs = ApiQuery.GetUtilisateurs("users?limit=2&skip=6&select=firstName,lastName,username,password");
-			List<Utilisateur> clients = ApiQuery.GetUtilisateurs("users?limit=10&skip=8&select=firstName,lastName,username,password");
-			foreach (Utilisateur u in proprietaire)
+			List<Models.Utilisateur> proprietaire = ApiQuery.GetUtilisateurs("users?limit=1&select=firstName,lastName,username,password");
+			List<Models.Utilisateur> vendeurs = ApiQuery.GetUtilisateurs("users?limit=5&skip=1&select=firstName,lastName,username,password");
+			List<Models.Utilisateur> fournisseurs = ApiQuery.GetUtilisateurs("users?limit=2&skip=6&select=firstName,lastName,username,password");
+			List<Models.Utilisateur> clients = ApiQuery.GetUtilisateurs("users?limit=10&skip=8&select=firstName,lastName,username,password");
+			foreach (Models.Utilisateur u in proprietaire)
 				AddUtilisateurBD(u, "P");
-			foreach (Utilisateur u in vendeurs)
+			foreach (Models.Utilisateur u in vendeurs)
 				AddUtilisateurBD(u, "V");
-			foreach (Utilisateur u in fournisseurs)
+			foreach (Models.Utilisateur u in fournisseurs)
 				AddUtilisateurBD(u, "F");
-			foreach (Utilisateur u in clients)
+			foreach (Models.Utilisateur u in clients)
 				AddUtilisateurBD(u, "C");
 		}
 
-		public void AddUtilisateurBD(Utilisateur u, string type)
+		public void AddUtilisateurBD(Models.Utilisateur u, string type)
 		{
 			u.Type = type;
 			GestionFleurContext GFContext = new GestionFleurContext();

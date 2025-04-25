@@ -18,6 +18,7 @@ namespace GestionFleur.Models
 		private double _prixUnitaire;
 		private int _quantite;
 		private int _quantiteEnAttente;
+		private int _quantiteEnAttenteBPerso;
 
 		[Ignore]
 		public int FleurId { get; set; }
@@ -66,6 +67,17 @@ namespace GestionFleur.Models
 				OnPropertyChanged();
 			}
 		}
+		[Ignore]
+		[NotMapped]
+		public int QuantiteEnAttenteBPerso
+		{
+			get { return _quantiteEnAttenteBPerso; }
+			set
+			{
+				_quantiteEnAttenteBPerso = value;
+				OnPropertyChanged();
+			}
+		}
 
 		[Ignore]
 		public int Quantite
@@ -98,6 +110,7 @@ namespace GestionFleur.Models
 			return !string.IsNullOrEmpty(Nom) && !string.IsNullOrEmpty(Couleur) && !string.IsNullOrEmpty(Description)
 					&&!(PrixUnitaire > 0);
 		}
+
 		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

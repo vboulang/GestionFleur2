@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GestionFleur.Models;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +21,12 @@ namespace GestionFleur.Views
 	/// </summary>
 	public partial class InterfaceProprietaire : Window
 	{
-		public InterfaceProprietaire()
+		public int UtilisateurId { get; set; }
+		public InterfaceProprietaire(int utilId)
 		{
+			UtilisateurId = utilId;
 			InitializeComponent();
-			ViewModels.InterfaceProprietaireViewModel propvm = new ViewModels.InterfaceProprietaireViewModel();
+			ViewModels.InterfaceProprietaireViewModel propvm = new ViewModels.InterfaceProprietaireViewModel(UtilisateurId);
 			DataContext = propvm;
 			if (propvm.FermerFenetre == null)
 				propvm.FermerFenetre = new Action(this.Close);

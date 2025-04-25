@@ -1,5 +1,4 @@
-﻿using GestionFleur.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -16,13 +15,13 @@ namespace GestionFleur.ViewModels
 	internal class GestionFleurContext : DbContext
 	{
 		//Les tables de base//
-		public DbSet<Bouquet> Bouquets { get; set; }
-		public DbSet<Utilisateur> Utilisateurs { get; set; }
-		public DbSet<Commande> Commandes { get; set; }
-		public DbSet<Fleur> Fleurs { get; set; }
-		public DbSet<FleursBouquets> FleursBouquets { get; set; }
-		public DbSet<BouquetsCommandes> BouquetsCommandes { get; set; }
-		public DbSet<FleursCommandes> FleursCommandes { get; set; }
+		public DbSet<Models.Bouquet> Bouquets { get; set; }
+		public DbSet<Models.Utilisateur> Utilisateurs { get; set; }
+		public DbSet<Models.Commande> Commandes { get; set; }
+		public DbSet<Models.Fleur> Fleurs { get; set; }
+		public DbSet<Models.FleursBouquets> FleursBouquets { get; set; }
+		public DbSet<Models.BouquetsCommandes> BouquetsCommandes { get; set; }
+		public DbSet<Models.FleursCommandes> FleursCommandes { get; set; }
 
 		//Les tables de jointure//
 
@@ -38,12 +37,12 @@ namespace GestionFleur.ViewModels
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
-			modelBuilder.Entity<Commande>()
+			modelBuilder.Entity<Models.Commande>()
 				.HasOne(c => c.Client)
 				.WithMany(u => u.CommandesClient)
 				.HasForeignKey(c => c.ClientId)
 				.OnDelete(DeleteBehavior.NoAction);
-			modelBuilder.Entity<Bouquet>().HasKey(b => b.BouquetId);
+			modelBuilder.Entity<Models.Bouquet>().HasKey(b => b.BouquetId);
 		}
 	}
 }

@@ -69,13 +69,67 @@
                         Background="SeaGreen"/>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Facturer">
-
-            </TabItem>
-            <TabItem Header="Annuler">
-
+            <TabItem Header="Gérer Commande">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Commandes:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" />
+                    <ListView ItemsSource="{Binding ListeCommandes.Commandes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CommandeId, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Total (CAD)" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TotalTransaction, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Paiement effectué?" Width="105">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PaiementEffectue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.GenererFactureCommand}" CommandParameter="{Binding}" Content="Génération Facture" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.SupprimerCommandeCommand }" CommandParameter="{Binding}" Content="Annuler" Margin="5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                </Grid>
             </TabItem>
         </TabControl>
-        
     </Grid>
 </Window>
