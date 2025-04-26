@@ -138,19 +138,16 @@ namespace GestionFleur.ViewModels
 
 		public void AddFlowerFromCSVInDB(string path)
 		{
-			MessageBox.Show(path);
 			using (var reader = new StreamReader(path))
 			using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 			{
 				var records = csv.GetRecords<Models.Fleur>();
 				Models.Fleur nouvellefleur = new Models.Fleur();
 				GestionFleurContext GFContext = new GestionFleurContext();
-				MessageBox.Show("lecture fleurs_db.csv");
 				foreach (var record in records)
 				{
 					nouvellefleur = record;
 					nouvellefleur.Quantite = 10;
-					MessageBox.Show(nouvellefleur.Nom);
 					GFContext.Fleurs.Add(nouvellefleur);
 					GFContext.SaveChanges();
 				}
