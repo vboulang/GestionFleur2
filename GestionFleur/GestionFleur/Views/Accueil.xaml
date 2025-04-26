@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="Accueil" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
@@ -59,25 +60,23 @@
             <Label Content="Déja Inscrit?"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="18" FontFamily="Carlito"/>
-            <Button x:Name="BoutonConnection" 
-                Content="Se Connecter" 
-                    Grid.Column="1" Grid.Row="0"
-                    Height="50" Width="120"
-                    FontSize="18" FontFamily="Carlito"
-                    Background="SeaGreen"
-                    Command="{Binding BoutonConnectionCommande}"/>
+            <Button Command="{Binding BoutonConnectionCommande}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Height="50" Width="120" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconBootstrapIcons Kind="DoorOpenFill" Width="16" Height="16" />
+                    <TextBlock Text="Se Connecter" />
+                </StackPanel>
+            </Button>
             <Label Content="Nouvel Utilisateur?" 
                    Grid.Column="0" Grid.Row="1"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="18" FontFamily="Carlito"/>
-            <Button x:Name="BoutonInscription"
-                    Content="Inscription"
-                    Grid.Column="1" Grid.Row="1"
-                    Height="50" Width="120"
-                    FontSize="18" FontFamily="Carlito"
-                    Background="LightGreen"
-                    Command="{Binding BoutonInscriptionCommande}"  
-            />
+            <Button Command="{Binding BoutonInscriptionCommande}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="50" Width="120" FontSize="18" FontFamily="Carlito" Background="LightGreen">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="16" Height="16" />
+                    <TextBlock Text="Inscription" />
+                </StackPanel>
+            </Button>
+            
         </Grid>
     </Grid>
 </Window>

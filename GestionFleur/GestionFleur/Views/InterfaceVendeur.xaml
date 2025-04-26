@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="InterfaceVendeur" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
@@ -64,6 +65,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+        <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                <TextBlock Text="Retour" />
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>

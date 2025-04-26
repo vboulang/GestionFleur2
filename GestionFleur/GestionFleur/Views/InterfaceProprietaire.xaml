@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="InterfaceProprietaire" Height="700" Width="1000"
         WindowStartupLocation = "CenterScreen">
@@ -59,14 +60,12 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Command="{Binding BoutonRetourCommande}"           
-                        Content="Retour"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Right"
-                        Margin="170"
-                        Height="50" Width="110"
-                        FontSize="18" FontFamily="Carlito"
-                        Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" VerticalAlignment="Center" HorizontalAlignment="Right" Height="50" Width="110" Margin="170" Grid.Row="4" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Gérer Commande">
@@ -127,7 +126,12 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
         </TabControl>

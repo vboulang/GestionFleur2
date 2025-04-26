@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionFleur.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="InterfaceClient" Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
@@ -64,7 +65,12 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="4" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Ajouter bouquet prédéfinis">
@@ -108,7 +114,12 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="4" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="4" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Créer bouquet">
@@ -168,12 +179,22 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding CreerBouquetPersoCommand}" Grid.Row="5" Grid.Column="0" Content="Créer Bouquet" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
-                    <Button Command="{Binding ReinitialiserBouquetCommand}" Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
+                    <Button Command="{Binding CreerBouquetPersoCommand}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="0" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="CartCheck" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Créer Bouquet" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding ReinitialiserBouquetCommand}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="1" FontSize="18" FontFamily="Carlito" Background="LightGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowClockwise" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Réinitialiser" />
+                        </StackPanel>
+                    </Button>
                     <Label Content="Message personnalisé:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" />
                     <TextBox Text="{Binding BouquetPerso.TempMessageCarte, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" Grid.RowSpan="2"/>
                     <Label Content="Contenu du bouquet personnalisé:" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="3" Margin="5,5,5,5" />
-                    <ListView ItemsSource="{Binding FleursAAjouterBouquet}" Grid.Row="3" Grid.Column="3" Grid.RowSpan="3" Margin="0,42,0,0">
+                    <ListView ItemsSource="{Binding FleursAAjouterBouquet}" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Margin="0,42,0,0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Nom" Width="150">
@@ -193,7 +214,12 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Commande en cours">
@@ -290,9 +316,24 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding AjouterCommandeCommand}" Grid.Row="5" Grid.Column="0" Content="Placer commande" Margin="5,5,4,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
-                    <Button Command="{Binding ReinitialiserCommandeCommand}" Grid.Row="5" Grid.Column="1" Content="Réinitialiser" Margin="6,5,5,5" FontSize="18" FontFamily="Carlito" Background="LightGreen"/>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="4" Content="Retour" Margin="4,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding AjouterCommandeCommand}" Margin="5,5,4,5" Grid.Row="5" Grid.Column="0" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="Check" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Placer commande" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding ReinitialiserCommandeCommand}" Margin="6,5,5,5" Grid.Row="5" Grid.Column="1" FontSize="18" FontFamily="Carlito" Background="LightGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowClockwise" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Réinitialiser" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="4" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Toutes les commandes">
@@ -346,7 +387,12 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding BoutonRetourCommande}" Grid.Row="5" Grid.Column="3" Content="Retour" Margin="5,5,5,5" FontSize="18" FontFamily="Carlito" Background="SeaGreen"/>
+                    <Button Command="{Binding BoutonRetourCommande}" Margin="5,5,5,5" Grid.Row="5" Grid.Column="3" FontSize="18" FontFamily="Carlito" Background="SeaGreen">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="ArrowReturnLeft" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock Text="Retour" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
         </TabControl>
