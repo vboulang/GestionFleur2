@@ -224,7 +224,7 @@ namespace GestionFleur.ViewModels
 			}
 			_gestionFleurContext.Commandes.Remove(CommandeSelectionnee);
 			_gestionFleurContext.SaveChanges();
-			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.ToList());
+			ListeCommandes.Commandes = new ObservableCollection<Models.Commande>(_gestionFleurContext.Commandes.Where(c => c.ClientId == UtilisateurEnConnexionId).ToList());
 		}
 		public void ReinitialiserBouquet()
 		{
